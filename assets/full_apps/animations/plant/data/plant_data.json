@@ -1,0 +1,62 @@
+[
+  {
+    "plant_name": "Mt. Hamilton Mock Stonecrop",
+    "image": "assets/images/full_apps/plant/images/1.png",
+    "price": "6",
+    "bg_color": "0xffffffff"
+  },
+  {
+    "plant_name": "Eyebright",
+    "image": "assets/images/full_apps/plant/images/2.png",
+    "price": "09491",
+    "bg_color": "0x11"
+  },
+  {
+    "plant_name": "Cottonleaf Passionflower",
+    "image": "assets/images/full_apps/plant/images/3.png",
+    "price": "8870",
+    "bg_color": "0xff456789"
+  },
+  {
+    "plant_name": "Plantain",
+    "image": "assets/images/full_apps/plant/images/4.png",
+    "price": "9479",
+    "bg_color": "Puce"
+  },
+  {
+    "plant_name": "Elliott's Croton",
+    "image": "assets/images/full_apps/plant/images/5.png",
+    "price": "0",
+    "bg_color": "Green"
+  },
+  {
+    "plant_name": "Shrubby Deervetch",
+    "image": "assets/images/full_apps/plant/images/6.png",
+    "price": "36",
+    "bg_color": "Red"
+  },
+  {
+    "plant_name": "African Tamarisk",
+    "image": "assets/images/full_apps/plant/images/7.png",
+    "price": "63596",
+    "bg_color": "Fuscia"
+  },
+  {
+    "plant_name": "Manila Grass",
+    "image": "assets/images/full_apps/plant/images/8.png",
+    "price": "1875",
+    "bg_color": "Red"
+  },
+  {
+    "plant_name": "Burrowing Four O'clock",
+    "image": "assets/images/full_apps/plant/images/9.png",
+    "price": "8477",
+    "bg_color": "Khaki"
+  },
+  {
+    "plant_name": "Firmleaf Willow",
+    "image": "assets/images/full_apps/plant/images/10.png",
+    "price": "5",
+    "bg_color": "Yellow"
+  }
+]

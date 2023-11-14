@@ -1,0 +1,38 @@
+[
+  {
+    "name": "FlutKit - Flutter UI Kit",
+    "rating": 4.6,
+    "rating_count": 47,
+    "price": 65,
+    "quantity": 12,
+    "description": "At its core, a GoPro is a small camera the takes the best qualities of point-and-shoots and camcorders and packs them into a rugged frame that’s smaller, waterproof, and virtually indestructible. Inside the cuboid design is an image sensor, processor, ultra wide-angle lens, and up to three microphones for recording audio in different conditions. The users interface is made up of just two or three buttons, and the Hero5 Black and Hero6 Black models feature touchscreens for more control.",
+    "image": "assets/images/full_apps/shopping/product_1.jpg"
+  },
+  {
+    "name": "The complete shoes",
+    "rating": 4.8,
+    "rating_count": 28,
+    "quantity": 8,
+    "description": "At its core, a GoPro is a small camera the takes the best qualities of point-and-shoots and camcorders and packs them into a rugged frame that’s smaller, waterproof, and virtually indestructible. Inside the cuboid design is an image sensor, processor, ultra wide-angle lens, and up to three microphones for recording audio in different conditions. The users interface is made up of just two or three buttons, and the Hero5 Black and Hero6 Black models feature touchscreens for more control.",
+    "price": 39,
+    "image": "assets/images/full_apps/shopping/product_2.jpg"
+  },
+  {
+    "name": "Cocooil",
+    "rating": 4.2,
+    "rating_count": 84,
+    "price": 48,
+    "quantity": 16,
+    "description": "At its core, a GoPro is a small camera the takes the best qualities of point-and-shoots and camcorders and packs them into a rugged frame that’s smaller, waterproof, and virtually indestructible. Inside the cuboid design is an image sensor, processor, ultra wide-angle lens, and up to three microphones for recording audio in different conditions. The users interface is made up of just two or three buttons, and the Hero5 Black and Hero6 Black models feature touchscreens for more control.",
+    "image": "assets/images/full_apps/shopping/product_3.jpg"
+  },
+  {
+    "name": "The luckiest plant of the earth",
+    "rating": 5.0,
+    "rating_count": 144,
+    "price": 78,
+    "quantity": 4,
+    "description": "At its core, a GoPro is a small camera the takes the best qualities of point-and-shoots and camcorders and packs them into a rugged frame that’s smaller, waterproof, and virtually indestructible. Inside the cuboid design is an image sensor, processor, ultra wide-angle lens, and up to three microphones for recording audio in different conditions. The users interface is made up of just two or three buttons, and the Hero5 Black and Hero6 Black models feature touchscreens for more control.",
+    "image": "assets/images/full_apps/shopping/product_4.jpg"
+  }
+]

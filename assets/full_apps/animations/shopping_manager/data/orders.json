@@ -1,0 +1,40 @@
+[
+  {
+    "id": 1,
+    "name": "FlutKit - Flutter UI Kit",
+    "price": 65,
+    "status": 2,
+    "image": "assets/images/full_apps/shopping/product_1.jpg",
+    "date": "2022-02-11T09:19:56.292678Z"
+  },
+  {
+    "id": 2,
+    "name": "The complete shoes",
+    "rating": 4.8,
+    "rating_count": 28,
+    "price": 39,
+    "status": 1,
+    "image": "assets/images/full_apps/shopping/product_2.jpg",
+    "date": "2022-02-10T09:19:56.292678Z"
+  },
+  {
+    "id": 3,
+    "name": "Coco oil",
+    "rating": 4.2,
+    "rating_count": 84,
+    "price": 48,
+    "status": 3,
+    "image": "assets/images/full_apps/shopping/product_3.jpg",
+    "date": "2022-02-09T09:19:56.292678Z"
+  },
+  {
+    "id": 4,
+    "name": "The luckiest plant of the earth",
+    "rating": 5.0,
+    "rating_count": 144,
+    "price": 78,
+    "status": 4,
+    "image": "assets/images/full_apps/shopping/product_4.jpg",
+    "date": "2022-02-08T09:19:56.292678Z"
+  }
+]
