@@ -86,7 +86,7 @@ class _EventSingleEventScreenState extends State<EventSingleEventScreen> {
                   children: [
                     Expanded(
                       child: MyText.headlineSmall(
-                          'Widgets of the Week - Flutter',
+                          'Fair Jobs Unja',
                           fontSize: 22,
                           color: theme.colorScheme.onBackground,
                           fontWeight: 600),
@@ -129,7 +129,7 @@ class _EventSingleEventScreenState extends State<EventSingleEventScreen> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                MyText.bodySmall("Thursday, May 29, 2020",
+                                MyText.bodySmall("Thursday, Des 04, 2023",
                                     fontWeight: 600,
                                     color: theme.colorScheme.onBackground),
                                 Container(
@@ -173,7 +173,7 @@ class _EventSingleEventScreenState extends State<EventSingleEventScreen> {
                                   Container(
                                     margin: MySpacing.top(2),
                                     child: MyText.bodySmall(
-                                        "SEAS, Ahmedabad University",
+                                        "Universitas Jambi",
                                         fontWeight: 500,
                                         color: theme.colorScheme.onBackground,
                                         xMuted: true),
@@ -204,7 +204,7 @@ class _EventSingleEventScreenState extends State<EventSingleEventScreen> {
                           Expanded(
                             child: Container(
                               margin: MySpacing.left(16),
-                              child: MyText.bodyMedium("\$99",
+                              child: MyText.bodyMedium("Free",
                                   fontWeight: 600,
                                   letterSpacing: 0.3,
                                   color: theme.colorScheme.onBackground),
@@ -261,7 +261,7 @@ class _EventSingleEventScreenState extends State<EventSingleEventScreen> {
                   style: ButtonStyle(
                       elevation: MaterialStatePropertyAll(0),
                       padding: MaterialStateProperty.all(MySpacing.xy(16, 0))),
-                  child: MyText.bodyMedium("Buy Tickets - \$39",
+                  child: MyText.bodyMedium("Daftar",
                       fontWeight: 600, color: theme.colorScheme.onPrimary),
                 ),
               )

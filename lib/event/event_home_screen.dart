@@ -1,10 +1,10 @@
-import 'package:yoven/event/event_filter_dialog.dart';
+// import 'package:yoven/event/event_filter_dialog.dart';
 import 'package:yoven/event/event_single_event_screen.dart';
 import 'package:yoven/helpers/theme/app_theme.dart';
 import 'package:yoven/helpers/widgets/my_container.dart';
 import 'package:yoven/helpers/widgets/my_spacing.dart';
 import 'package:yoven/helpers/widgets/my_text.dart';
-import 'package:yoven/helpers/widgets/my_text_style.dart';
+// import 'package:yoven/helpers/widgets/my_text_style.dart';
 import 'package:flutter/material.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 
@@ -88,176 +88,131 @@ class _EventHomeScreenState extends State<EventHomeScreen> {
             ],
           ),
         ),
-        // Container(
-        //   margin: MySpacing.fromLTRB(24, 24, 24, 0),
-        //   child: Row(
-        //     children: [
-        //       Expanded(
-        //         child: Container(
-        //           padding: MySpacing.vertical(4),
-        //           decoration: BoxDecoration(
-        //               color: customTheme.card,
-        //               border: Border.all(color: customTheme.border, width: 1),
-        //               borderRadius: BorderRadius.all(Radius.circular(4))),
-        //           child: Row(
-        //             children: [
-        //               Container(
-        //                 margin: MySpacing.left(12),
-        //                 child: Icon(
-        //                   LucideIcons.search,
-        //                   color: theme.colorScheme.onBackground.withAlpha(200),
-        //                   size: 16,
-        //                 ),
-        //               ),
-        //               Expanded(
-        //                 child: Container(
-        //                   margin: MySpacing.left(12),
-        //                   child: TextFormField(
-        //                     style: MyTextStyle.bodyMedium(
-        //                         color: theme.colorScheme.onBackground,
-        //                         fontWeight: 500),
-        //                     decoration: InputDecoration(
-        //                       fillColor: customTheme.card,
-        //                       hintStyle: MyTextStyle.bodyMedium(
-        //                           color: theme.colorScheme.onBackground,
-        //                           muted: true,
-        //                           fontWeight: 500),
-        //                       hintText: "Find Events...",
-        //                       border: InputBorder.none,
-        //                       enabledBorder: InputBorder.none,
-        //                       focusedBorder: InputBorder.none,
-        //                       isDense: true,
-        //                     ),
-        //                     textCapitalization: TextCapitalization.sentences,
-        //                   ),
-        //                 ),
-        //               ),
-        //             ],
-        //           ),
-        //         ),
-        //       ),
-        //       MyContainer(
-        //         onTap: () {
-        //           showDialog(
-        //               context: context,
-        //               builder: (BuildContext context) => EventFilterDialog());
-        //         },
-        //         margin: MySpacing.left(16),
-        //         padding: MySpacing.all(12),
-        //         borderRadiusAll: 4,
-        //         color: theme.colorScheme.primary,
-        //         child: Icon(
-        //           LucideIcons.slidersHorizontal,
-        //           size: 20,
-        //           color: theme.colorScheme.onPrimary,
-        //         ),
-        //       ),
-        //     ],
-        //   ),
-        // ),
-        // Container(
-        //   margin: MySpacing.top(8),
-        //   padding: MySpacing.vertical(8),
-        //   child: SingleChildScrollView(
-        //     scrollDirection: Axis.horizontal,
-        //     child: Row(
-        //       children: [
-        //         Container(
-        //           margin: MySpacing.left(12),
-        //           child: singleCategory(
-        //               title: "All", iconData: LucideIcons.layoutList, index: 0),
-        //         ),
-        //         singleCategory(
-        //             title: "Birthday", iconData: LucideIcons.cake, index: 1),
-        //         singleCategory(
-        //             title: "Party",
-        //             iconData: LucideIcons.partyPopper,
-        //             index: 2),
-        //         singleCategory(
-        //             title: "Talks",
-        //             iconData: LucideIcons.messageCircle,
-        //             index: 3),
-        //         Container(
-        //           margin: MySpacing.right(24),
-        //           child: singleCategory(
-        //               title: "Food", iconData: LucideIcons.apple, index: 4),
-        //         ),
-        //       ],
-        //     ),
-        //   ),
-        // ),
-        // Container(
-        //   margin: MySpacing.fromLTRB(24, 4, 24, 0),
-        //   child: Row(
-        //     children: [
-        //       Expanded(
-        //         child: MyText.titleMedium("Popular",
-        //             fontWeight: 700, color: theme.colorScheme.onBackground),
-        //       ),
-        //       MyText.bodySmall("View All",
-        //           fontWeight: 600, color: theme.colorScheme.primary),
-        //     ],
-        //   ),
-        // ),
-        // Container(
-        //   margin: MySpacing.top(16),
-        //   child: SingleChildScrollView(
-        //     scrollDirection: Axis.horizontal,
-        //     child: Row(
-        //       children: [
-        //         Container(
-        //           margin: MySpacing.left(24),
-        //           child: singleEvent(
-        //               title: "Flutter Test",
-        //               image: './assets/images/apps/event/pattern-1.png',
-        //               date: "04",
-        //               month: "May",
-        //               subject: "California, US",
-        //               time: "07:30 PM - 09:00 PM",
-        //               width: MediaQuery.of(context).size.width * 0.6),
-        //         ),
-        //         Container(
-        //           margin: MySpacing.left(16),
-        //           child: singleEvent(
-        //               title: "Flutter Dev",
-        //               image: './assets/images/apps/social/post-l1.jpg',
-        //               date: "29",
-        //               month: "Feb",
-        //               subject: "California, US",
-        //               time: "07:30 PM - 09:00 PM",
-        //               width: MediaQuery.of(context).size.width * 0.6),
-        //         ),
-        //         Container(
-        //           margin: MySpacing.fromLTRB(16, 0, 24, 0),
-        //           child: singleEvent(
-        //               title: "Flutter Test",
-        //               image: './assets/images/apps/event/pattern-1.png',
-        //               date: "04",
-        //               month: "May",
-        //               subject: "California, US",
-        //               time: "07:30 PM - 09:00 PM",
-        //               width: MediaQuery.of(context).size.width * 0.6),
-        //         ),
-        //       ],
-        //     ),
-        //   ),
-        // ),
-        // Container(
-        //   margin: MySpacing.fromLTRB(24, 16, 24, 0),
-        //   child: MyText.titleMedium("This Weekend",
-        //       fontWeight: 700, color: theme.colorScheme.onBackground),
-        // ),
-        // Container(
-        //   margin: MySpacing.fromLTRB(24, 16, 24, 16),
-        //   child: singleEvent(
-        //       title: "Flutter Test",
-        //       image: './assets/images/apps/event/pattern-1.png',
-        //       date: "04",
-        //       month: "May",
-        //       subject: "California, US",
-        //       time: "07:30 PM - 09:00 PM",
-        //       width: MediaQuery.of(context).size.width - 48),
-        // )
+        Container(
+          margin: MySpacing.top(8),
+          padding: MySpacing.vertical(8),
+          child: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: [
+                Container(
+                  margin: MySpacing.left(12),
+                  child: singleCategory(
+                      title: "All", iconData: LucideIcons.layoutList, index: 0),
+                ),
+                // singleCategory(
+                //     title: "Birthday", iconData: LucideIcons.cake, index: 1),
+                // singleCategory(
+                //     title: "Party",
+                //     iconData: LucideIcons.partyPopper,
+                //     index: 2),
+                // singleCategory(
+                //     title: "Talks",
+                //     iconData: LucideIcons.messageCircle,
+                //     index: 3),
+                // Container(
+                //   margin: MySpacing.right(24),
+                //   child: singleCategory(
+                //       title: "Food", iconData: LucideIcons.apple, index: 4),
+                // ),
+              ],
+            ),
+          ),
+        ),
+        Container(
+          margin: MySpacing.fromLTRB(24, 4, 24, 0),
+          child: Row(
+            children: [
+              Expanded(
+                child: MyText.titleMedium("Popular",
+                    fontWeight: 700, color: theme.colorScheme.onBackground),
+              ),
+              MyText.bodySmall("View All",
+                  fontWeight: 600, color: theme.colorScheme.primary),
+            ],
+          ),
+        ),
+        Container(
+          margin: MySpacing.top(16),
+          child: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: [
+                Container(
+                  margin: MySpacing.left(24),
+                  child: singleEvent(
+                      title: "Fair Jobs",
+                      image: './assets/images/apps/event/pattern-1.png',
+                      date: "04",
+                      month: "Des",
+                      subject: "Mendalo, Jambi",
+                      time: "07:30 PM - 09:00 PM",
+                      width: MediaQuery.of(context).size.width * 0.6),
+                ),
+                Container(
+                  margin: MySpacing.left(16),
+                  child: singleEvent(
+                      title: "Unja Expo",
+                      image: './assets/images/apps/event/pattern-1.png',
+                      date: "29",
+                      month: "Feb",
+                      subject: "Mendalo, Jambi",
+                      time: "07:30 PM - 15:00 PM",
+                      width: MediaQuery.of(context).size.width * 0.6),
+                ),
+                Container(
+                  margin: MySpacing.fromLTRB(16, 0, 24, 0),
+                  child: singleEvent(
+                      title: "Siminar Internasioan IOT",
+                      image: './assets/images/apps/event/pattern-1.png',
+                      date: "04",
+                      month: "Mar",
+                      subject: "Rektorat Lantai 3",
+                      time: "07:30 PM - 09:00 PM",
+                      width: MediaQuery.of(context).size.width * 0.6),
+                ),
+              ],
+            ),
+          ),
+        ),
+        Container(
+          margin: MySpacing.fromLTRB(24, 16, 24, 0),
+          child: MyText.titleMedium("This Weekend",
+              fontWeight: 700, color: theme.colorScheme.onBackground),
+        ),
+        Container(
+          margin: MySpacing.fromLTRB(24, 16, 24, 16),
+          child: singleEvent(
+              title: "Webinar Nasional",
+              image: './assets/images/apps/event/pattern-2.png',
+              date: "05",
+              month: "Des",
+              subject: "Mendalo , Jambi",
+              time: "07:30 PM - 09:00 PM",
+              width: MediaQuery.of(context).size.width - 48),
+        ),
+        Container(
+          margin: MySpacing.fromLTRB(24, 16, 24, 16),
+          child: singleEvent(
+              title: "Webinar Nasional",
+              image: './assets/images/apps/event/pattern-2.png',
+              date: "05",
+              month: "Des",
+              subject: "Mendalo , Jambi",
+              time: "07:30 PM - 09:00 PM",
+              width: MediaQuery.of(context).size.width - 48),
+        ),
+        Container(
+          margin: MySpacing.fromLTRB(24, 16, 24, 16),
+          child: singleEvent(
+              title: "Webinar Nasional",
+              image: './assets/images/apps/event/pattern-2.png',
+              date: "05",
+              month: "Des",
+              subject: "Mendalo , Jambi",
+              time: "07:30 PM - 09:00 PM",
+              width: MediaQuery.of(context).size.width - 48),
+        )
       ],
     );
   }
