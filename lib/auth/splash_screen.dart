@@ -24,7 +24,7 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
     theme = AppTheme.theme;
     customTheme = AppTheme.customTheme;
-    MyTextStyle.changeFontFamily(GoogleFonts.quicksand);
+    MyTextStyle.changeFontFamily(GoogleFonts.montserrat);
     MyTextStyle.changeDefaultFontWeight({
       100: FontWeight.w200,
       200: FontWeight.w300,
@@ -58,8 +58,8 @@ class _SplashScreenState extends State<SplashScreen> {
                   Expanded(
                     child: Center(
                       child: Image(
-                        image: AssetImage(
-                            'assets/images/event/splash_screen.png'),
+                        image:
+                            AssetImage('assets/images/event/splash_screen.png'),
                         width: 320,
                       ),
                     ),
@@ -72,9 +72,7 @@ class _SplashScreenState extends State<SplashScreen> {
                         padding: MySpacing.y(8),
                         onPressed: () {
                           Navigator.of(context, rootNavigator: true).push(
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    Register()),
+                            MaterialPageRoute(builder: (context) => Register()),
                           );
                         },
                         child: MyText.labelLarge(
@@ -90,8 +88,7 @@ class _SplashScreenState extends State<SplashScreen> {
                         borderRadiusAll: 4,
                         onPressed: () {
                           Navigator.of(context, rootNavigator: true).push(
-                            MaterialPageRoute(
-                                builder: (context) => Login()),
+                            MaterialPageRoute(builder: (context) => Login()),
                           );
                         },
                         backgroundColor: customTheme.medicarePrimary,
