@@ -53,6 +53,9 @@ dependencies:
   blur: ^3.1.0
 #  google_mobile_ads: ^3.0.0
   flutter_blurhash: ^0.7.0
+  firebase_core: ^2.24.0
+  firebase_auth: ^4.15.0
+  fluttertoast: ^8.2.4
 #  flutx: ^0.2.0-rc.1
 #  flutx: ^0.1.2
 

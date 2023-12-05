@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1030896701175",
+    "project_id": "yoven-b885c",
+    "storage_bucket": "yoven-b885c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1030896701175:android:497f8d7bc861e1282bcdf2",
+        "android_client_info": {
+          "package_name": "com.example.yoven"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCLKybw_SGRYxv7UlfGC_PaGV_1HtPFZV8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -3,6 +3,9 @@
 * Version : 1.0.0
 * */
 
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:yoven/auth/firebase_auth_/firebase_auth_services.dart';
+import 'package:yoven/auth/firebase_auth_/showToast.dart';
 import 'package:yoven/auth/login_screen.dart';
 import 'package:yoven/helpers/theme/app_theme.dart';
 import 'package:yoven/helpers/widgets/my_button.dart';
@@ -12,6 +15,7 @@ import 'package:yoven/helpers/widgets/my_text.dart';
 import 'package:yoven/helpers/widgets/my_text_style.dart';
 import 'package:flutter/material.dart';
 import 'package:lucide_icons/lucide_icons.dart';
+import 'package:yoven/event/event_full_app.dart';
 
 class Register extends StatefulWidget {
   const Register({super.key});
@@ -22,6 +26,24 @@ class Register extends StatefulWidget {
 }
 
 class _RegisterScreen extends State<Register> {
+
+  final FirebaseAuthService _auth = FirebaseAuthService();
+
+  TextEditingController _usernameController = TextEditingController();
+  TextEditingController _numberController = TextEditingController();
+  TextEditingController _emailController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
+
+  bool isSigningUp = false;
+   @override
+  void dispose() {
+    _usernameController.dispose();
+    _numberController.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
+
   bool _passwordVisible = false;
   late CustomTheme customTheme;
   late ThemeData theme;
@@ -75,6 +97,7 @@ class _RegisterScreen extends State<Register> {
                                     fontWeight: 500),
                                 prefixIcon: const Icon(LucideIcons.user),
                               ),
+                              controller: _usernameController,
                               textCapitalization: TextCapitalization.sentences,
                             ),
                           ),
@@ -92,6 +115,8 @@ class _RegisterScreen extends State<Register> {
                                 prefixIcon: const Icon(LucideIcons.mail),
                               ),
                               keyboardType: TextInputType.emailAddress,
+                              controller: _emailController,
+
                             ),
                           ),
                           Container(
@@ -108,11 +133,14 @@ class _RegisterScreen extends State<Register> {
                                 prefixIcon: const Icon(LucideIcons.phone),
                               ),
                               keyboardType: TextInputType.number,
+                              controller: _numberController,
+
                             ),
                           ),
                           Container(
                             margin: const EdgeInsets.only(top: 16),
                             child: TextFormField(
+                              controller: _passwordController,
                               style: MyTextStyle.bodyLarge(
                                   color: theme.colorScheme.onBackground,
                                   fontWeight: 500),
@@ -136,16 +164,18 @@ class _RegisterScreen extends State<Register> {
                               obscureText: _passwordVisible,
                             ),
                           ),
-                          Container(
-                              margin: const EdgeInsets.only(top: 24),
-                              child: MyButton(
-                                  elevation: 0,
-                                  borderRadiusAll: 4,
-                                  onPressed: () {},
-                                  padding: MySpacing.xy(20, 20),
-                                  child: MyText.labelMedium("REGISTER",
-                                      fontWeight: 600,
-                                      color: theme.colorScheme.onPrimary))),
+                           Container(
+                                margin: const EdgeInsets.only(top: 24),
+                                child: MyButton(
+                                    elevation: 0,
+                                    borderRadiusAll: 4,
+                                    onPressed: () {
+                                      _signUp();
+                                    },
+                                    padding: MySpacing.xy(20, 20),
+                                    child: MyText.labelMedium("REGISTER",
+                                        fontWeight: 600,
+                                        color: theme.colorScheme.onPrimary))),
                         ],
                       ),
                     )
@@ -176,21 +206,33 @@ class _RegisterScreen extends State<Register> {
             ],
           ),
         ),
-        // Positioned(
-        //   top: MySpacing.safeAreaTop(context) + 12,
-        //   left: 16,
-        //   child: InkWell(
-        //     onTap: () {    
-        //       Navigator.pop(context);
-        //     },
-        //     child: Icon(
-        //       LucideIcons.chevronLeft,
-        //       color: theme.colorScheme.onBackground,
-        //     ),
-        //   ),
-        // )
       ],
     ));
+  }
+
+   void _signUp() async {
+
+    setState(() {
+      isSigningUp = true;
+    });
+
+    // String username = _usernameController.text;
+    // String number = _numberController.text;
+    String email = _emailController.text;
+    String password = _passwordController.text;
+
+    User? user = await _auth.signUpWithEmailAndPassword(email, password);
+
+    setState(() {
+      isSigningUp = false;
+    });
+
+    if (user != null) {
+       showToast(message: "User is successfully created");
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => EventFullApp()));
+    } else {
+      showToast(message: "Some error happend");
+    }
   }
 }
 

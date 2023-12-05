@@ -1,4 +1,7 @@
 // import 'package:yoven/homepage.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:yoven/auth/firebase_auth_/firebase_auth_services.dart';
+import 'package:yoven/auth/firebase_auth_/showToast.dart';
 import 'package:yoven/auth/register_screen.dart';
 // import 'package:yoven/full.dart';
 // import 'package:yoven/homepage.dart';
@@ -21,7 +24,19 @@ class Login extends StatefulWidget {
 }
 
 class _LoginScreen extends State<Login> {
-  bool? _passwordVisible = false, _check = false;
+
+  bool _isSigning = false;
+  final FirebaseAuthService _auth = FirebaseAuthService();
+  TextEditingController _emailController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
+  bool? _passwordVisible = false;
   // late CustomTheme customTheme;
   late ThemeData theme;
 
@@ -64,6 +79,7 @@ class _LoginScreen extends State<Login> {
                       child: Column(
                         children: <Widget>[
                           TextFormField(
+                            controller: _emailController,
                             style: MyTextStyle.bodyLarge(
                                 letterSpacing: 0.1,
                                 color: theme.colorScheme.onBackground,
@@ -80,6 +96,7 @@ class _LoginScreen extends State<Login> {
                       Container(
                             margin: const EdgeInsets.only(top: 16),
                             child: TextFormField(
+                              controller: _passwordController,
                               style: MyTextStyle.bodyLarge(
                                   letterSpacing: 0.1,
                                   color: theme.colorScheme.onBackground,
@@ -119,10 +136,7 @@ class _LoginScreen extends State<Login> {
                                 borderRadiusAll: 4,
                                 padding: MySpacing.y(20),
                                 onPressed: () {
-                                  Navigator.pushReplacement( 
-                                    context,
-                                    MaterialPageRoute(builder: (context) => EventFullApp()),
-                                  );
+                                  _signIn();
                                 },
                                 child: MyText.labelMedium("LOGIN",
                                     fontWeight: 600,
@@ -165,6 +179,28 @@ class _LoginScreen extends State<Login> {
         ),
       ],
     ));
+  }
+
+  void _signIn() async {
+  setState(() {
+    _isSigning = true;
+  });
+
+  String email = _emailController.text;
+  String password = _passwordController.text;
+
+  User? user = await _auth.signInWithEmailAndPassword(email, password);
+
+  setState(() {
+    _isSigning = false;
+  });
+
+  if (user != null) {
+    showToast(message: "User is successfully signed in");
+    Navigator.pushReplacement(context,MaterialPageRoute(builder: (context) => EventFullApp()));
+  } else {
+    showToast(message: "Email/Password Wrong");
+  }
   }
 }
 
