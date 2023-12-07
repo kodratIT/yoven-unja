@@ -1,13 +1,13 @@
-import 'package:jambicraff/helpers/extensions/widgets_extension.dart';
-import 'package:jambicraff/helpers/theme/app_theme.dart';
-import 'package:jambicraff/helpers/widgets/my_text.dart';
-import 'package:jambicraff/widgets/material/basic/choice_chip_screen.dart';
-import 'package:jambicraff/widgets/material/basic/flutx_two_tone_icons_screen.dart';
-import 'package:jambicraff/widgets/material/basic/grid_action_screen.dart';
-import 'package:jambicraff/widgets/material/basic/grid_hero_screen.dart';
-import 'package:jambicraff/widgets/material/basic/grid_screen.dart';
-import 'package:jambicraff/widgets/material/basic/simple_chip_screen.dart';
-import 'package:jambicraff/widgets/material/basic/snackbar_screen.dart';
+import 'package:yoven/helpers/extensions/widgets_extension.dart';
+import 'package:yoven/helpers/theme/app_theme.dart';
+import 'package:yoven/helpers/widgets/my_text.dart';
+import 'package:yoven/widgets/material/basic/choice_chip_screen.dart';
+import 'package:yoven/widgets/material/basic/flutx_two_tone_icons_screen.dart';
+import 'package:yoven/widgets/material/basic/grid_action_screen.dart';
+import 'package:yoven/widgets/material/basic/grid_hero_screen.dart';
+import 'package:yoven/widgets/material/basic/grid_screen.dart';
+import 'package:yoven/widgets/material/basic/simple_chip_screen.dart';
+import 'package:yoven/widgets/material/basic/snackbar_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 

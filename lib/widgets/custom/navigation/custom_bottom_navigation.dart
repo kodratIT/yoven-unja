@@ -1,4 +1,4 @@
-import 'package:jambicraff/helpers/widgets/my_text.dart';
+import 'package:yoven/helpers/widgets/my_text.dart';
 import 'package:flutter/material.dart';
 
 class CustomBottomNavigation extends StatelessWidget {

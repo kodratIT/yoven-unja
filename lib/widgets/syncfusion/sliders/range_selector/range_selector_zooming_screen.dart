@@ -6,7 +6,7 @@
 
 import 'dart:math';
 
-import 'package:jambicraff/widgets/syncfusion/data/charts_sample_data.dart';
+import 'package:yoven/widgets/syncfusion/data/charts_sample_data.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';

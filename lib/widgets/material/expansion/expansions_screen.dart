@@ -1,8 +1,8 @@
-import 'package:jambicraff/helpers/theme/app_theme.dart';
-import 'package:jambicraff/helpers/widgets/my_text.dart';
-import 'package:jambicraff/widgets/material/expansion/expansion_panel_screen.dart';
-import 'package:jambicraff/widgets/material/expansion/expansion_tile_screen.dart';
-import 'package:jambicraff/widgets/material/expansion/invoice_expansion.dart';
+import 'package:yoven/helpers/theme/app_theme.dart';
+import 'package:yoven/helpers/widgets/my_text.dart';
+import 'package:yoven/widgets/material/expansion/expansion_panel_screen.dart';
+import 'package:yoven/widgets/material/expansion/expansion_tile_screen.dart';
+import 'package:yoven/widgets/material/expansion/invoice_expansion.dart';
 import 'package:flutter/material.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 

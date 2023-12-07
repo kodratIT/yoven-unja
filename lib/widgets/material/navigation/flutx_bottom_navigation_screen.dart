@@ -1,8 +1,8 @@
-import 'package:jambicraff/helpers/theme/app_theme.dart';
-import 'package:jambicraff/helpers/widgets/my_bottom_navigation_bar.dart';
-import 'package:jambicraff/helpers/widgets/my_bottom_navigation_bar_item.dart';
-import 'package:jambicraff/helpers/widgets/my_spacing.dart';
-import 'package:jambicraff/helpers/widgets/my_text.dart';
+import 'package:yoven/helpers/theme/app_theme.dart';
+import 'package:yoven/helpers/widgets/my_bottom_navigation_bar.dart';
+import 'package:yoven/helpers/widgets/my_bottom_navigation_bar_item.dart';
+import 'package:yoven/helpers/widgets/my_spacing.dart';
+import 'package:yoven/helpers/widgets/my_text.dart';
 import 'package:flutter/material.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 

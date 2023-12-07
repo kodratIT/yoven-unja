@@ -5,8 +5,8 @@
 
 import 'dart:math';
 
-import 'package:jambicraff/helpers/widgets/my_text.dart';
-import 'package:jambicraff/helpers/widgets/my_text_style.dart';
+import 'package:yoven/helpers/widgets/my_text.dart';
+import 'package:yoven/helpers/widgets/my_text_style.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 

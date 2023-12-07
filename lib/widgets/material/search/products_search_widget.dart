@@ -5,12 +5,12 @@
 
 import 'dart:async';
 
-import 'package:jambicraff/helpers/theme/app_theme.dart';
-import 'package:jambicraff/helpers/utils/generator.dart';
-import 'package:jambicraff/helpers/widgets/my_container.dart';
-import 'package:jambicraff/helpers/widgets/my_spacing.dart';
-import 'package:jambicraff/helpers/widgets/my_star_rating.dart';
-import 'package:jambicraff/helpers/widgets/my_text.dart';
+import 'package:yoven/helpers/theme/app_theme.dart';
+import 'package:yoven/helpers/utils/generator.dart';
+import 'package:yoven/helpers/widgets/my_container.dart';
+import 'package:yoven/helpers/widgets/my_spacing.dart';
+import 'package:yoven/helpers/widgets/my_star_rating.dart';
+import 'package:yoven/helpers/widgets/my_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:lucide_icons/lucide_icons.dart';

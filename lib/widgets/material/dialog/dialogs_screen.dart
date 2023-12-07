@@ -1,15 +1,15 @@
-import 'package:jambicraff/helpers/extensions/extensions.dart';
-import 'package:jambicraff/helpers/theme/app_theme.dart';
-import 'package:jambicraff/helpers/widgets/my_spacing.dart';
-import 'package:jambicraff/helpers/widgets/my_text.dart';
-import 'package:jambicraff/widgets/material/dialog/account_dialog.dart';
-import 'package:jambicraff/widgets/material/dialog/add_contact_dialog.dart';
-import 'package:jambicraff/widgets/material/dialog/comment_dialog.dart';
-import 'package:jambicraff/widgets/material/dialog/import_contact_dialog.dart';
-import 'package:jambicraff/widgets/material/dialog/permission_dialog.dart';
-import 'package:jambicraff/widgets/material/dialog/policy_dialog.dart';
-import 'package:jambicraff/widgets/material/dialog/post_dialog.dart';
-import 'package:jambicraff/widgets/material/dialog/simple_dialog_screen.dart';
+import 'package:yoven/helpers/extensions/extensions.dart';
+import 'package:yoven/helpers/theme/app_theme.dart';
+import 'package:yoven/helpers/widgets/my_spacing.dart';
+import 'package:yoven/helpers/widgets/my_text.dart';
+import 'package:yoven/widgets/material/dialog/account_dialog.dart';
+import 'package:yoven/widgets/material/dialog/add_contact_dialog.dart';
+import 'package:yoven/widgets/material/dialog/comment_dialog.dart';
+import 'package:yoven/widgets/material/dialog/import_contact_dialog.dart';
+import 'package:yoven/widgets/material/dialog/permission_dialog.dart';
+import 'package:yoven/widgets/material/dialog/policy_dialog.dart';
+import 'package:yoven/widgets/material/dialog/post_dialog.dart';
+import 'package:yoven/widgets/material/dialog/simple_dialog_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 

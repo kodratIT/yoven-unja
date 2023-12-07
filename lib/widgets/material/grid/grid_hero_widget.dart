@@ -3,9 +3,9 @@
 * Version : 1.0.0
 * */
 
-import 'package:jambicraff/helpers/theme/app_theme.dart';
-import 'package:jambicraff/helpers/widgets/my_text.dart';
-import 'package:jambicraff/widgets/custom/full_image_screen.dart';
+import 'package:yoven/helpers/theme/app_theme.dart';
+import 'package:yoven/helpers/widgets/my_text.dart';
+import 'package:yoven/widgets/custom/full_image_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:lucide_icons/lucide_icons.dart';

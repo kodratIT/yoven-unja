@@ -1,11 +1,11 @@
-import 'package:jambicraff/helpers/extensions/extensions.dart';
-import 'package:jambicraff/helpers/theme/app_theme.dart';
-import 'package:jambicraff/helpers/widgets/my_text.dart';
-import 'package:jambicraff/widgets/material/progress/create_account_progress.dart';
-import 'package:jambicraff/widgets/material/progress/fail_progress.dart';
-import 'package:jambicraff/widgets/material/progress/internet_check_progress.dart';
-import 'package:jambicraff/widgets/material/progress/payment_progress.dart';
-import 'package:jambicraff/widgets/material/progress/upload_progress.dart';
+import 'package:yoven/helpers/extensions/extensions.dart';
+import 'package:yoven/helpers/theme/app_theme.dart';
+import 'package:yoven/helpers/widgets/my_text.dart';
+import 'package:yoven/widgets/material/progress/create_account_progress.dart';
+import 'package:yoven/widgets/material/progress/fail_progress.dart';
+import 'package:yoven/widgets/material/progress/internet_check_progress.dart';
+import 'package:yoven/widgets/material/progress/payment_progress.dart';
+import 'package:yoven/widgets/material/progress/upload_progress.dart';
 import 'package:flutter/material.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 

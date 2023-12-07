@@ -1,15 +1,15 @@
-import 'package:jambicraff/helpers/extensions/extensions.dart';
-import 'package:jambicraff/helpers/theme/app_theme.dart';
-import 'package:jambicraff/helpers/widgets/my_spacing.dart';
-import 'package:jambicraff/helpers/widgets/my_text.dart';
-import 'package:jambicraff/widgets/syncfusion/sliders/sliders/slider_interval_screen.dart';
-import 'package:jambicraff/widgets/syncfusion/sliders/sliders/slider_label_screen.dart';
-import 'package:jambicraff/widgets/syncfusion/sliders/sliders/slider_step_screen.dart';
-import 'package:jambicraff/widgets/syncfusion/sliders/sliders/slider_tooltip_screen.dart';
-import 'package:jambicraff/widgets/syncfusion/sliders/sliders/vertical_slider_interval_screen.dart';
-import 'package:jambicraff/widgets/syncfusion/sliders/sliders/vertical_slider_label_screen.dart';
-import 'package:jambicraff/widgets/syncfusion/sliders/sliders/vertical_slider_step_screen.dart';
-import 'package:jambicraff/widgets/syncfusion/sliders/sliders/vertical_slider_tooltip_screen.dart';
+import 'package:yoven/helpers/extensions/extensions.dart';
+import 'package:yoven/helpers/theme/app_theme.dart';
+import 'package:yoven/helpers/widgets/my_spacing.dart';
+import 'package:yoven/helpers/widgets/my_text.dart';
+import 'package:yoven/widgets/syncfusion/sliders/sliders/slider_interval_screen.dart';
+import 'package:yoven/widgets/syncfusion/sliders/sliders/slider_label_screen.dart';
+import 'package:yoven/widgets/syncfusion/sliders/sliders/slider_step_screen.dart';
+import 'package:yoven/widgets/syncfusion/sliders/sliders/slider_tooltip_screen.dart';
+import 'package:yoven/widgets/syncfusion/sliders/sliders/vertical_slider_interval_screen.dart';
+import 'package:yoven/widgets/syncfusion/sliders/sliders/vertical_slider_label_screen.dart';
+import 'package:yoven/widgets/syncfusion/sliders/sliders/vertical_slider_step_screen.dart';
+import 'package:yoven/widgets/syncfusion/sliders/sliders/vertical_slider_tooltip_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 

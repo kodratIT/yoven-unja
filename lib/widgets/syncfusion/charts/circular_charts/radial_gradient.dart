@@ -1,6 +1,6 @@
 import 'dart:ui' as ui;
 
-import 'package:jambicraff/helpers/widgets/my_text_style.dart';
+import 'package:yoven/helpers/widgets/my_text_style.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 

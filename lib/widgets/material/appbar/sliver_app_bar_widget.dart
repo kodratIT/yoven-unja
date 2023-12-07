@@ -3,9 +3,9 @@
 * Version : 1.0.0
 * */
 
-import 'package:jambicraff/helpers/extensions/widgets_extension.dart';
-import 'package:jambicraff/images.dart';
-import 'package:jambicraff/helpers/theme/app_theme.dart';
+import 'package:yoven/helpers/extensions/widgets_extension.dart';
+import 'package:yoven/images.dart';
+import 'package:yoven/helpers/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 

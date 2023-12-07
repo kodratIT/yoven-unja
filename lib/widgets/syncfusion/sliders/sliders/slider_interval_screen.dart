@@ -4,8 +4,8 @@
 * Description :
 * */
 
-import 'package:jambicraff/helpers/widgets/my_spacing.dart';
-import 'package:jambicraff/helpers/widgets/my_text.dart';
+import 'package:yoven/helpers/widgets/my_spacing.dart';
+import 'package:yoven/helpers/widgets/my_text.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart' as intl;
 import 'package:syncfusion_flutter_core/theme.dart';
