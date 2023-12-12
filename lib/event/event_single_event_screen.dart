@@ -7,6 +7,26 @@ import 'package:flutter/material.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 
 class EventSingleEventScreen extends StatefulWidget {
+
+  final int eventId; 
+  final String title; 
+  final String date; 
+  final String subject; 
+  final String time; 
+  final String image; 
+  final String about; 
+  final String locationDetail;
+  EventSingleEventScreen({
+    required this.eventId,
+    required this.title,
+    required this.subject,
+    required this.date,
+    required this.time,
+    required this.image,
+    required this.about,
+    required this.locationDetail,
+    });
+
   @override
   _EventSingleEventScreenState createState() => _EventSingleEventScreenState();
 }
@@ -22,6 +42,8 @@ class _EventSingleEventScreenState extends State<EventSingleEventScreen> {
     theme = AppTheme.theme;
   }
 
+  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,7 +52,7 @@ class _EventSingleEventScreenState extends State<EventSingleEventScreen> {
         Stack(
           children: [
             Image(
-              image: AssetImage('./assets/images/apps/event/pattern-1.png'),
+              image: AssetImage('${widget.image}'),
               fit: BoxFit.cover,
               width: MediaQuery.of(context).size.width,
               height: 240,
@@ -86,7 +108,7 @@ class _EventSingleEventScreenState extends State<EventSingleEventScreen> {
                   children: [
                     Expanded(
                       child: MyText.headlineSmall(
-                          'Fair Jobs Unja',
+                          '${widget.title}',
                           fontSize: 22,
                           color: theme.colorScheme.onBackground,
                           fontWeight: 600),
@@ -129,12 +151,12 @@ class _EventSingleEventScreenState extends State<EventSingleEventScreen> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                MyText.bodySmall("Thursday, Des 04, 2023",
+                                MyText.bodySmall("Thursday, ${widget.date}",
                                     fontWeight: 600,
                                     color: theme.colorScheme.onBackground),
                                 Container(
                                   margin: MySpacing.top(2),
-                                  child: MyText.bodySmall("8:30 AM - 11:30 AM",
+                                  child: MyText.bodySmall("${widget.time} AM",
                                       fontWeight: 500,
                                       color: theme.colorScheme.onBackground,
                                       xMuted: true),
@@ -167,13 +189,13 @@ class _EventSingleEventScreenState extends State<EventSingleEventScreen> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  MyText.bodySmall("Auditorium",
+                                  MyText.bodySmall("${widget.locationDetail}",
                                       fontWeight: 600,
                                       color: theme.colorScheme.onBackground),
                                   Container(
                                     margin: MySpacing.top(2),
                                     child: MyText.bodySmall(
-                                        "Universitas Jambi",
+                                        "${widget.subject}",
                                         fontWeight: 500,
                                         color: theme.colorScheme.onBackground,
                                         xMuted: true),
@@ -226,15 +248,12 @@ class _EventSingleEventScreenState extends State<EventSingleEventScreen> {
                 child: RichText(
                   text: TextSpan(children: <TextSpan>[
                     TextSpan(
-                        text: Generator.getDummyText(20),
+                        text: '${widget.about}',
                         style: MyTextStyle.titleSmall(
                             color: theme.colorScheme.onBackground,
                             muted: true,
                             fontWeight: 500)),
-                    TextSpan(
-                        text: " Read More",
-                        style: MyTextStyle.bodySmall(
-                            color: theme.colorScheme.primary, fontWeight: 600))
+                 
                   ]),
                 ),
               ),

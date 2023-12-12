@@ -7,6 +7,8 @@ import 'package:yoven/helpers/widgets/my_text.dart';
 // import 'package:yoven/helpers/widgets/my_text_style.dart';
 import 'package:flutter/material.dart';
 import 'package:lucide_icons/lucide_icons.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:yoven/model/ModelHome.dart';
 
 class EventHomeScreen extends StatefulWidget {
   @override
@@ -14,17 +16,41 @@ class EventHomeScreen extends StatefulWidget {
 }
 
 class _EventHomeScreenState extends State<EventHomeScreen> {
+  // List<Map<String, dynamic>> ?eventsList;
   late CustomTheme customTheme;
   late ThemeData theme;
+  late Future<List<ModelHome>> eventsList;
+ 
 
   @override
   void initState() {
     super.initState();
     customTheme = AppTheme.customTheme;
     theme = AppTheme.theme;
+    // eventsList = fetchData();
   }
 
   int? selectedCategory = 0;
+
+  Future<List<ModelHome>> fetchData() async {
+  CollectionReference events = FirebaseFirestore.instance.collection('events');
+
+    try {
+      QuerySnapshot querySnapshot = await events.get();
+      List<ModelHome> eventsList = querySnapshot.docs
+          .map((DocumentSnapshot document) =>
+              ModelHome.fromJson(document.data() as Map<String, dynamic>))
+          .toList();
+
+      return eventsList;
+    } catch (e) {
+      print('Error getting data: $e');
+      return [];
+    }
+  }
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -136,83 +162,91 @@ class _EventHomeScreenState extends State<EventHomeScreen> {
           margin: MySpacing.top(16),
           child: SingleChildScrollView(
             scrollDirection: Axis.horizontal,
-            child: Row(
-              children: [
-                Container(
-                  margin: MySpacing.left(24),
-                  child: singleEvent(
-                      title: "Fair Jobs",
-                      image: './assets/images/apps/event/pattern-1.png',
-                      date: "04",
-                      month: "Des",
-                      subject: "Mendalo, Jambi",
-                      time: "07:30 PM - 09:00 PM",
-                      width: MediaQuery.of(context).size.width * 0.6),
-                ),
-                Container(
-                  margin: MySpacing.left(16),
-                  child: singleEvent(
-                      title: "Unja Expo",
-                      image: './assets/images/apps/event/pattern-1.png',
-                      date: "29",
-                      month: "Feb",
-                      subject: "Mendalo, Jambi",
-                      time: "07:30 PM - 15:00 PM",
-                      width: MediaQuery.of(context).size.width * 0.6),
-                ),
-                Container(
-                  margin: MySpacing.fromLTRB(16, 0, 24, 0),
-                  child: singleEvent(
-                      title: "Siminar Internasioan IOT",
-                      image: './assets/images/apps/event/pattern-1.png',
-                      date: "04",
-                      month: "Mar",
-                      subject: "Rektorat Lantai 3",
-                      time: "07:30 PM - 09:00 PM",
-                      width: MediaQuery.of(context).size.width * 0.6),
-                ),
-              ],
+            child: FutureBuilder<List<ModelHome>>(
+              future: fetchData(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return CircularProgressIndicator();
+                } else if (snapshot.hasError) {
+                  return Text('Error: ${snapshot.error}');
+                } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                  print('Tidak ada acara yang tersedia. Data: ${snapshot.data}');
+                  return Text('Tidak ada acara yang tersedia');
+                } else {
+                  List<ModelHome> eventsList = snapshot.data!;
+                  // Mengiterasi melalui List<ModelHome> dan membuat widget singleEvent
+                  return Row(
+                    children: eventsList.take(4).map((event) {
+                      return Container(
+                        margin: MySpacing.fromLTRB(24, 16, 0, 0),
+                        child: singleEvent(
+                          title: event.name,
+                          image: './assets/images/apps/event/pattern-1.png',
+                          date: event.dateEvent,
+                          // month: 's',
+                          subject: event.locationDetail,
+                          time: event.timeEvent,
+                          width: MediaQuery.of(context).size.width * 0.6,
+                          event_id: event.id,
+                          about: event.description,
+                          locationDetail: event.location,
+
+                        ),
+                      );
+                    }).toList(),
+                  );
+                }
+              },
             ),
           ),
         ),
-        Container(
+         Container(
           margin: MySpacing.fromLTRB(24, 16, 24, 0),
           child: MyText.titleMedium("This Weekend",
               fontWeight: 700, color: theme.colorScheme.onBackground),
         ),
         Container(
-          margin: MySpacing.fromLTRB(24, 16, 24, 16),
-          child: singleEvent(
-              title: "Webinar Nasional",
-              image: './assets/images/apps/event/pattern-2.png',
-              date: "05",
-              month: "Des",
-              subject: "Mendalo , Jambi",
-              time: "07:30 PM - 09:00 PM",
-              width: MediaQuery.of(context).size.width - 48),
+          child: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: FutureBuilder<List<ModelHome>>(
+              future: fetchData(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return CircularProgressIndicator();
+                } else if (snapshot.hasError) {
+                  return Text('Error: ${snapshot.error}');
+                } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                  print('Tidak ada acara yang tersedia. Data: ${snapshot.data}');
+                  return Text('Tidak ada acara yang tersedia');
+                } else {
+                  List<ModelHome> eventsList = snapshot.data!;
+                  // Mengiterasi melalui List<ModelHome> dan membuat widget singleEvent
+                  return Column(
+                    children: eventsList.take(4).map((event) {
+                      return Container(
+                        margin: MySpacing.fromLTRB(24, 16, 24, 16),
+                        child: singleEvent(
+                          title: event.name,
+                          image: './assets/images/apps/event/pattern-2.png',
+                          date: event.dateEvent,
+                          // month: 's',
+                          subject: event.locationDetail,
+                          time: event.timeEvent,
+                          width: MediaQuery.of(context).size.width - 48,
+                          event_id: event.id,
+                          about: event.description,
+                          locationDetail: event.location,
+
+                        ),
+                      );
+                    }).toList(),
+                  );
+                }
+              },
+            ),
+          ),
         ),
-        Container(
-          margin: MySpacing.fromLTRB(24, 16, 24, 16),
-          child: singleEvent(
-              title: "Webinar Nasional",
-              image: './assets/images/apps/event/pattern-2.png',
-              date: "05",
-              month: "Des",
-              subject: "Mendalo , Jambi",
-              time: "07:30 PM - 09:00 PM",
-              width: MediaQuery.of(context).size.width - 48),
-        ),
-        Container(
-          margin: MySpacing.fromLTRB(24, 16, 24, 16),
-          child: singleEvent(
-              title: "Webinar Nasional",
-              image: './assets/images/apps/event/pattern-2.png',
-              date: "05",
-              month: "Des",
-              subject: "Mendalo , Jambi",
-              time: "07:30 PM - 09:00 PM",
-              width: MediaQuery.of(context).size.width - 48),
-        )
+
       ],
     );
   }
@@ -260,15 +294,28 @@ class _EventHomeScreenState extends State<EventHomeScreen> {
   Widget singleEvent(
       {required String image,
       required String date,
-      required String month,
+      // required String month,
       required String title,
       required String subject,
       required String time,
-      required double width}) {
+      required double width,required event_id,required String about,required String locationDetail}) {
     return InkWell(
       onTap: () {
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => EventSingleEventScreen()));
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+           builder: (context) => EventSingleEventScreen(
+            eventId: event_id,
+            title: title,
+            date: date,
+            subject: subject,
+            time: time,
+            image: image,
+            about: about,
+            locationDetail: locationDetail,
+          ),
+          ),
+        );
       },
       child: Container(
         clipBehavior: Clip.hardEdge,
@@ -308,13 +355,13 @@ class _EventHomeScreenState extends State<EventHomeScreen> {
                           fontWeight: 600,
                           textAlign: TextAlign.center,
                         ),
-                        MyText.bodySmall(
-                          month,
-                          fontSize: 11,
-                          color: theme.colorScheme.primary,
-                          fontWeight: 600,
-                          textAlign: TextAlign.center,
-                        ),
+                        // MyText.bodySmall(
+                        //   month,
+                        //   fontSize: 11,
+                        //   color: theme.colorScheme.primary,
+                        //   fontWeight: 600,
+                        //   textAlign: TextAlign.center,
+                        // ),
                       ],
                     ),
                   ),

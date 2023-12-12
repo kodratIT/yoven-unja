@@ -3,9 +3,16 @@ import 'package:yoven/helpers/theme/app_theme.dart';
 import 'package:yoven/helpers/widgets/my_spacing.dart';
 import 'package:yoven/helpers/widgets/my_text.dart';
 import 'package:yoven/helpers/widgets/my_text_style.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
+// import 'package:get/get_state_manager/get_state_manager.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lucide_icons/lucide_icons.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:random_string/random_string.dart';
+import 'dart:io';
+
 
 class EventCreateScreen extends StatefulWidget {
   @override
@@ -16,6 +23,87 @@ class _EventCreateScreenState extends State<EventCreateScreen> {
   late CustomTheme customTheme;
   late ThemeData theme;
   DateTime? selectedDate;
+  File? _imageFile;
+
+
+  TextEditingController _titlecontroller = TextEditingController();
+  TextEditingController _capacitycontroller = TextEditingController();
+  TextEditingController _descriptionController = TextEditingController();
+  TextEditingController _eventstartController = TextEditingController();
+  TextEditingController _LocationController = TextEditingController();
+  TextEditingController _DetailLocationController = TextEditingController();
+  TextEditingController _timeEventController = TextEditingController();
+  TextEditingController _categoryController = TextEditingController();
+
+
+  Future<int> getNextId() async {
+    final DocumentReference counterDoc = FirebaseFirestore.instance.collection('counters').doc('eventCounter');
+    final DocumentSnapshot counterSnapshot = await counterDoc.get();
+
+    int currentCount = counterSnapshot.exists ? counterSnapshot['count'] : 0;
+
+    // Increment the counter and update it in Firestore
+    await counterDoc.set({'count': currentCount + 1});
+
+    return currentCount + 1;
+  }
+
+  Future<void> addEventWithAutoIncrement() async {
+    final CollectionReference events = FirebaseFirestore.instance.collection('events');
+    final int nextId = await getNextId();
+    try {
+      await events.doc(nextId.toString()).set({
+        'id': nextId,
+        'capacity': _capacitycontroller.text,
+        'date_event': _eventstartController.text,
+        'description': _descriptionController.text,
+        'images': "dadadad",
+        'location': _LocationController.text,
+        'location_detail': _DetailLocationController.text,
+        'name': _titlecontroller.text,
+        'time_event': _timeEventController.text,
+        'category': _categoryController.text,
+      });
+      _categoryController.text = "";
+      _capacitycontroller.text = "";
+      _eventstartController.text = "";
+      _descriptionController.text = "";
+      _LocationController.text = "";
+      _DetailLocationController.text = "";
+      _titlecontroller.text = "";
+      _timeEventController.text = "";
+      _categoryController.text = "";
+      
+      setState(() {
+        _imageFile = null;
+      });
+      showToast(message: "Event Successfully Created");
+    } catch (e) {
+      showToast(message: "Event Galat Created");
+      
+    }
+    
+  }
+
+
+  void addEvent() async {
+    // await uploadImageToStorage(_imageFile!);
+    await addEventWithAutoIncrement();
+  }
+
+
+  Future<void> _pickImage() async {
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+    // final pickedFile = await picker.getImage(source: ImageSource.gallery);
+
+    if (pickedFile != null) {
+      setState(() {
+        _imageFile = File(pickedFile.path);
+      });
+    }
+  }
+
 
   _pickDate(BuildContext context) async {
       final DateTime? picked = await showDatePicker(
@@ -85,6 +173,7 @@ class _EventCreateScreenState extends State<EventCreateScreen> {
                 Container(
                   margin: MySpacing.fromLTRB(24, 8, 24, 0),
                   child: TextFormField(
+                    controller: _titlecontroller,
                     style: MyTextStyle.headlineSmall(
                         color: theme.colorScheme.onBackground,
                         letterSpacing: -0.4,
@@ -105,9 +194,44 @@ class _EventCreateScreenState extends State<EventCreateScreen> {
                     textCapitalization: TextCapitalization.sentences,
                   ),
                 ),
+                 Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                        if (_imageFile != null)
+                          Image.file(
+                            _imageFile!,
+                            width: 200,
+                            height: 200,
+                            fit: BoxFit.cover,
+                          ),
+                       
+                      SizedBox(height: 20),
+                      ElevatedButton(
+                        onPressed: _pickImage,
+                        style: ButtonStyle(
+                        backgroundColor: 
+                            MaterialStateProperty.all<Color>(theme.colorScheme.onBackground), // Ganti warna sesuai keinginan
+                        ),
+                          child: MyText.bodyMedium("Pilih Image",
+                        color: theme.colorScheme.onPrimary),
+                      ),
+                      SizedBox(height: 20),
+                    //  ElevatedButton(
+                    //     onPressed: () async {
+                    //       if (_imageFile != null) {
+                    //         await uploadImageToStorage(_imageFile!);
+                    //       }
+                    //     },
+                    //     child: Text('Upload Gambar ke Cloud Storage'),
+                    //   ),
+                    ],
+                  ),
+                ),
                 Container(
                   margin: MySpacing.fromLTRB(24, 0, 24, 0),
                   child: TextFormField(
+                    controller: _descriptionController,
                     style: MyTextStyle.bodyMedium(
                         color: theme.colorScheme.onBackground,
                         fontWeight: 500,
@@ -148,6 +272,48 @@ class _EventCreateScreenState extends State<EventCreateScreen> {
                 Container(
                   margin: MySpacing.fromLTRB(24, 0, 24, 0),
                   child: TextFormField(
+                    controller: _capacitycontroller,
+                    style: MyTextStyle.bodyMedium(
+                        color: theme.colorScheme.onBackground,
+                        fontWeight: 500,
+                        letterSpacing: 0,
+                        muted: true),
+                    decoration: InputDecoration(
+                      hintText: "Kapasitas Peserta",
+                      hintStyle: MyTextStyle.bodyMedium(
+                          color: theme.colorScheme.onBackground,
+                          fontWeight: 600,
+                          letterSpacing: 0,
+                          xMuted: true),
+                      border: UnderlineInputBorder(
+                        borderSide: BorderSide(
+                            width: 1.5,
+                            color:
+                                theme.colorScheme.onBackground.withAlpha(50)),
+                      ),
+                      enabledBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(
+                            width: 1.4,
+                            color:
+                                theme.colorScheme.onBackground.withAlpha(50)),
+                      ),
+                      focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(
+                            width: 1.5,
+                            color:
+                                theme.colorScheme.onBackground.withAlpha(50)),
+                      ),
+                    ),
+                    maxLines: 3,
+                    minLines: 1,
+                    autofocus: false,
+                    textCapitalization: TextCapitalization.sentences,
+                  ),
+                ),
+                Container(
+                  margin: MySpacing.fromLTRB(24, 0, 24, 0),
+                  child: TextFormField(
+                    controller: _eventstartController,
                     style: MyTextStyle.bodyMedium(
                         color: theme.colorScheme.onBackground,
                         fontWeight: 500,
@@ -188,6 +354,7 @@ class _EventCreateScreenState extends State<EventCreateScreen> {
                 Container(
                   margin: MySpacing.fromLTRB(24, 0, 24, 0),
                   child: TextFormField(
+                    controller: _timeEventController,
                     style: MyTextStyle.bodyMedium(
                         color: theme.colorScheme.onBackground,
                         fontWeight: 500,
@@ -228,6 +395,7 @@ class _EventCreateScreenState extends State<EventCreateScreen> {
                 Container(
                   margin: MySpacing.fromLTRB(24, 0, 24, 0),
                   child: TextFormField(
+                    controller: _LocationController,
                     style: MyTextStyle.bodyMedium(
                         color: theme.colorScheme.onBackground,
                         fontWeight: 500,
@@ -268,6 +436,7 @@ class _EventCreateScreenState extends State<EventCreateScreen> {
                 Container(
                   margin: MySpacing.fromLTRB(24, 0, 24, 0),
                   child: TextFormField(
+                    controller: _DetailLocationController,
                     style: MyTextStyle.bodyMedium(
                         color: theme.colorScheme.onBackground,
                         fontWeight: 500,
@@ -308,6 +477,9 @@ class _EventCreateScreenState extends State<EventCreateScreen> {
                 Container(
                   margin: MySpacing.fromLTRB(24, 0, 24, 0),
                   child: TextFormField(
+                    controller: _categoryController,
+                    enabled: false, // Set to false to make it read-only
+                    readOnly: true,
                     style: MyTextStyle.bodyMedium(
                         color: theme.colorScheme.onBackground,
                         fontWeight: 500,
@@ -345,7 +517,25 @@ class _EventCreateScreenState extends State<EventCreateScreen> {
                     textCapitalization: TextCapitalization.sentences,
                   ),
                 ),
-              
+                Container(
+                  color: theme.colorScheme.background,
+                  margin: EdgeInsets.only(left: 0,top: 10,right: 0,bottom: 0),
+                  child: Center(
+                    child: CupertinoButton(
+                    color: theme.colorScheme.onSurface,
+                    onPressed: () {
+                       _showSheet(context, _categoryController);
+                    },
+                    padding:
+                        EdgeInsets.only(left: 100, top: 8, right: 100, bottom: 8),
+                    pressedOpacity: 0.5,
+                    child: MyText.bodyMedium("Kategori",
+                        color: theme.colorScheme.onPrimary)),
+                  ),
+                ),
+
+
+               
               ],
             ),
           ),
@@ -390,7 +580,7 @@ class _EventCreateScreenState extends State<EventCreateScreen> {
                       ),
                        GestureDetector(
                         onTap: () {
-                          showToast(message: "Event Successfully Created");
+                          addEvent();
                         },
                         child: Container(
                           margin: MySpacing.left(16),
@@ -417,13 +607,76 @@ class _EventCreateScreenState extends State<EventCreateScreen> {
     );
   }
 
-   void showSnackbarWithFloating(String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: MyText.titleSmall(message, color: theme.colorScheme.onPrimary),
-        backgroundColor: theme.colorScheme.primary,
-        behavior: SnackBarBehavior.floating,
+  void showSnackbarWithFloating(String message) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: MyText.titleSmall(message, color: theme.colorScheme.onPrimary),
+          backgroundColor: theme.colorScheme.primary,
+          behavior: SnackBarBehavior.floating,
+        ),
+      );
+    }
+
+  void _showSheet(BuildContext context, TextEditingController controller) {
+    showCupertinoModalPopup(
+      context: context,
+      builder: (context) => CupertinoActionSheet(
+        title: MyText.titleLarge("Kategori", fontWeight: 700, letterSpacing: 0.5),
+        message: MyText.titleSmall("Pilih Kategori", fontWeight: 500, letterSpacing: 0.2),
+        actions: <Widget>[
+          CupertinoActionSheetAction(
+            child: MyText.bodyLarge("Seminar", fontWeight: 600),
+            onPressed: () {
+              _updateTextField("Seminar", controller);
+              Navigator.pop(context);
+            },
+          ),
+          CupertinoActionSheetAction(
+            child: MyText.bodyLarge("Webinar", fontWeight: 600),
+            onPressed: () {
+              _updateTextField("Webinar", controller);
+              Navigator.pop(context);
+            },
+          ),
+          CupertinoActionSheetAction(
+            child: MyText.bodyLarge("Kuliah Umum", fontWeight: 600),
+            onPressed: () {
+              _updateTextField("Kuliah Umum", controller);
+              Navigator.pop(context);
+            },
+          ),
+        ],
+        cancelButton: CupertinoActionSheetAction(
+          child: MyText.titleMedium("Cancel", color: theme.colorScheme.error, fontWeight: 600),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
       ),
     );
   }
+
+  void _updateTextField(String category, TextEditingController controller) {
+    controller.text = category;
+  }
+
+  Future<void> uploadImageToStorage(File imageFile) async {
+    final String imageName = 'images/${generateRandomString(10)}.jpg'; // Adjust the length as needed
+    final Reference storageReference = FirebaseStorage.instance.ref().child(imageName);
+
+    try {
+      await storageReference.putFile(imageFile);
+      print('Image uploaded successfully!');
+    } catch (e) {
+      print('Error uploading image: $e');
+    }
+  }
+
+  String generateRandomString(int length) {
+    return randomAlphaNumeric(length);
+  }
 }
+
+
+
+

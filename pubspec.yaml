@@ -57,6 +57,8 @@ dependencies:
   firebase_auth: ^4.15.0
   fluttertoast: ^8.2.4
   cloud_firestore: ^4.13.5
+  firebase_storage: ^11.5.5
+  random_string: ^2.3.1
 #  flutx: ^0.2.0-rc.1
 #  flutx: ^0.1.2
 
