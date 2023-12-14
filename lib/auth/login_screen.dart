@@ -1,4 +1,5 @@
 // import 'package:yoven/homepage.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:yoven/auth/firebase_auth_/firebase_auth_services.dart';
 import 'package:yoven/auth/firebase_auth_/showToast.dart';
@@ -14,6 +15,8 @@ import 'package:yoven/helpers/widgets/my_text.dart';
 import 'package:yoven/helpers/widgets/my_text_style.dart';
 import 'package:flutter/material.dart';
 import 'package:lucide_icons/lucide_icons.dart';
+import 'package:yoven/model/UserModel.dart';
+
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -26,6 +29,7 @@ class Login extends StatefulWidget {
 class _LoginScreen extends State<Login> {
 
   bool _isSigning = false;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final FirebaseAuthService _auth = FirebaseAuthService();
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
@@ -46,6 +50,8 @@ class _LoginScreen extends State<Login> {
     // customTheme = AppTheme.customTheme;
     theme = AppTheme.theme;
   }
+
+ 
 
   @override
   Widget build(BuildContext context) {

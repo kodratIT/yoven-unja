@@ -3,6 +3,7 @@
 * Version : 1.0.0
 * */
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:yoven/auth/firebase_auth_/firebase_auth_services.dart';
 import 'package:yoven/auth/firebase_auth_/showToast.dart';
@@ -16,6 +17,7 @@ import 'package:yoven/helpers/widgets/my_text_style.dart';
 import 'package:flutter/material.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 import 'package:yoven/event/event_full_app.dart';
+import 'package:yoven/model/UserModel.dart';
 
 class Register extends StatefulWidget {
   const Register({super.key});
@@ -42,6 +44,33 @@ class _RegisterScreen extends State<Register> {
     _emailController.dispose();
     _passwordController.dispose();
     super.dispose();
+  }
+
+   Future<void> _createDetailUser(UserModel userDetail) async {
+  try {
+    // Assuming 'user_details' is the collection name for user details
+    await FirebaseFirestore.instance.collection('users').add({
+      'id': userDetail.id,
+      'name': userDetail.name,
+      'phone_number': userDetail.mobilePhone,
+    });
+
+    print('User details added successfully');
+  } catch (e) {
+    print('Error adding user details: $e');
+    }
+  }
+
+
+  void CreateData(String _id,String name,int phone)async{
+    UserModel UserNew = UserModel(
+      id: _id,
+      name: name,
+      mobilePhone:phone,
+      createdAt: DateTime.now()
+    );
+
+    await _createDetailUser(UserNew);
   }
 
   bool _passwordVisible = false;
@@ -228,7 +257,9 @@ class _RegisterScreen extends State<Register> {
     });
 
     if (user != null) {
-       showToast(message: "User is successfully created");
+
+      CreateData(user.uid,_usernameController.text,int.parse(_numberController.text));
+      showToast(message: "User is successfully created");
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => EventFullApp()));
     } else {
       showToast(message: "Some error happend");

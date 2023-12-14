@@ -1,3 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:yoven/auth/firebase_auth_/showToast.dart';
+import 'package:yoven/event/event_full_app.dart';
+import 'package:yoven/event/event_ticket_dialog.dart';
+import 'package:yoven/event/event_ticket_screen.dart';
+import 'package:yoven/event/event_upcoming_screen.dart';
 import 'package:yoven/helpers/theme/app_theme.dart';
 import 'package:yoven/helpers/utils/generator.dart';
 import 'package:yoven/helpers/widgets/my_spacing.dart';
@@ -5,6 +12,7 @@ import 'package:yoven/helpers/widgets/my_text.dart';
 import 'package:yoven/helpers/widgets/my_text_style.dart';
 import 'package:flutter/material.dart';
 import 'package:lucide_icons/lucide_icons.dart';
+import 'package:yoven/model/ModelEventAccept.dart';
 
 class EventSingleEventScreen extends StatefulWidget {
 
@@ -34,14 +42,103 @@ class EventSingleEventScreen extends StatefulWidget {
 class _EventSingleEventScreenState extends State<EventSingleEventScreen> {
   late CustomTheme customTheme;
   late ThemeData theme;
+  bool statusRegis = false;
+  String uid = '';
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   @override
   void initState() {
     super.initState();
     customTheme = AppTheme.customTheme;
     theme = AppTheme.theme;
+
+    uid = getCurrentUserId();
+    checkRegistrationStatus();
+
+
   }
 
+  String getCurrentUserId() {
+  User? user = FirebaseAuth.instance.currentUser;
+
+  // Check if there is a currently signed-in user
+  if (user != null) {
+    String userId = user.uid;
+    return userId;
+  } else {
+    // No user is signed in
+      return '';
+    }
+  }
+
+  Future<void> checkRegistrationStatus() async {
+    try {
+      String? uid = getCurrentUserId();
+      bool isUserRegistered = await checkEventAccepted(widget.eventId, uid);
+      setState(() {
+        statusRegis = isUserRegistered;
+      });
+    } catch (e) {
+      print('Error checking registration status: $e');
+    }
+  }
+
+  Future<void> handleEventRegistration(ModelEventAccept event) async {
+  try {
+    // Check if the user is already registered for the event
+    bool isUserRegistered = await checkEventAccepted(event.eventId, event.userId);
+
+    if (isUserRegistered) {
+      // User is already registered, you can handle this case accordingly
+      showToast(message: 'Anda sudah terdaftar pada acara ini.');
+    } else {
+      // User is not registered, proceed with registration
+      await _firestore.collection('event_aceppted').add({
+        'event_id': event.eventId,
+        'ticket': event.ticket,
+        'timespent': event.timeSpent,
+        'user_id': event.userId,
+      });
+
+      showToast(message: 'Pendaftaran Berhasil.');
+    }
+  } catch (e) {
+    print('Error handling event registration: $e');
+  }
+}
+
+
+  Future<bool> checkEventAccepted(int eventId, String? userId) async {
+  try {
+    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+        .collection('event_aceppted')
+        .where('event_id', isEqualTo: eventId)
+        .where('user_id', isEqualTo: userId)
+        .get();
+
+    if (querySnapshot.docs.isNotEmpty) {
+      return true;
+    } 
+    return false;
+  } catch (e) {
+    print('Error checking event_aceppted: $e');
+    return false;
+  }
+}
+
+
+
+  void _btnCreate() async {
+    ModelEventAccept eventAccept = ModelEventAccept(
+      eventId: widget.eventId,
+      ticket: 'asadeada',
+      timeSpent: DateTime.now(),
+      userId: uid, // Anda dapat mengganti nilai ini dengan nilai yang sesuai dari Firebase Authentication
+    );
+
+    await handleEventRegistration(eventAccept);
+
+  }
   
 
   @override
@@ -275,14 +372,45 @@ class _EventSingleEventScreenState extends State<EventSingleEventScreen> {
               ),
               Container(
                 margin: MySpacing.fromLTRB(24, 16, 24, 0),
-                child: ElevatedButton(
-                  onPressed: () {},
-                  style: ButtonStyle(
-                      elevation: MaterialStatePropertyAll(0),
-                      padding: MaterialStateProperty.all(MySpacing.xy(16, 0))),
-                  child: MyText.bodyMedium("Daftar",
-                      fontWeight: 600, color: theme.colorScheme.onPrimary),
+                child: statusRegis
+            ? ElevatedButton(
+                onPressed: () {
+                  // Code to execute if the user is registered
+                  // For example, show a message or navigate to a different screen
+                  // print('Telah Mendaftar');
+                },
+                style: ButtonStyle(
+                  elevation: MaterialStateProperty.all(0),
+                  padding: MaterialStateProperty.all(MySpacing.xy(16, 0)),
                 ),
+                child: MyText.bodyMedium(
+                  "Telah Mendaftar",
+                  fontWeight: 600,
+                  color: theme.colorScheme.onSecondary,
+                ),
+              )
+            : ElevatedButton(
+                onPressed: () {
+                  // Code to execute if the user is not registered
+                  // For example, show a registration button
+                  _btnCreate(); 
+                   Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => EventFullApp(),
+                    ),
+                  );
+                },
+                style: ButtonStyle(
+                  elevation: MaterialStateProperty.all(0),
+                  padding: MaterialStateProperty.all(MySpacing.xy(16, 0)),
+                ),
+                child: MyText.bodyMedium(
+                  "Daftar",
+                  fontWeight: 600,
+                  color: theme.colorScheme.onPrimary,
+                ),
+              ),
               )
             ],
           ),
