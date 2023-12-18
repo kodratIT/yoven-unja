@@ -1,3 +1,4 @@
+import 'package:intl/intl.dart';
 import 'package:yoven/auth/firebase_auth_/showToast.dart';
 import 'package:yoven/helpers/theme/app_theme.dart';
 import 'package:yoven/helpers/widgets/my_spacing.dart';
@@ -24,6 +25,7 @@ class _EventCreateScreenState extends State<EventCreateScreen> {
   late ThemeData theme;
   DateTime? selectedDate;
   File? _imageFile;
+  String? _downloadURL;
 
 
   TextEditingController _titlecontroller = TextEditingController();
@@ -57,7 +59,7 @@ class _EventCreateScreenState extends State<EventCreateScreen> {
         'capacity': _capacitycontroller.text,
         'date_event': _eventstartController.text,
         'description': _descriptionController.text,
-        'images': "dadadad",
+        'images': _downloadURL,
         'location': _LocationController.text,
         'location_detail': _DetailLocationController.text,
         'name': _titlecontroller.text,
@@ -87,22 +89,63 @@ class _EventCreateScreenState extends State<EventCreateScreen> {
 
 
   void addEvent() async {
-    // await uploadImageToStorage(_imageFile!);
-    await addEventWithAutoIncrement();
+
+    _uploadImage();
+    addEventWithAutoIncrement();
   }
 
 
   Future<void> _pickImage() async {
     final picker = ImagePicker();
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
-    // final pickedFile = await picker.getImage(source: ImageSource.gallery);
 
-    if (pickedFile != null) {
-      setState(() {
+    setState(() {
+      if (pickedFile != null) {
         _imageFile = File(pickedFile.path);
-      });
-    }
+      }
+    });
   }
+
+   Future<String?> _uploadImage() async {
+    String _LinkImages ='';
+    if (_imageFile == null) {
+      print('No image selected');
+      return '';
+    }
+    String extension = 'jpg';
+    String imageName = generateUniqueImageName(extension); // Nama gambar yang akan disimpan
+
+    try {
+      Reference storageReference =
+          FirebaseStorage.instance.ref().child('events/$imageName');
+      UploadTask uploadTask = storageReference.putFile(_imageFile!);
+      TaskSnapshot taskSnapshot = await uploadTask.whenComplete(() => null);
+      _downloadURL = await taskSnapshot.ref.getDownloadURL();
+      
+      
+      print('Download URL: $_downloadURL');
+    } catch (e) {
+      print('Error uploading image: $e');
+    }
+
+    return _LinkImages;
+
+  }
+
+  String generateUniqueImageName(String extension) {
+  // Mendapatkan timestamp saat ini
+  DateTime now = DateTime.now();
+
+  // Format timestamp sebagai string untuk digunakan sebagai nama gambar
+  String formattedTimestamp = DateFormat('yyyyMMdd_HHmmss').format(now);
+
+  // Menyusun nama gambar dengan format 'image_timestamp'
+  String imageName = 'image_$formattedTimestamp.$extension';
+
+  return imageName;
+}
+
+
 
 
   _pickDate(BuildContext context) async {

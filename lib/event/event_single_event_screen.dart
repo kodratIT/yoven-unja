@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:yoven/auth/firebase_auth_/showToast.dart';
 import 'package:yoven/event/event_full_app.dart';
+import 'package:yoven/event/event_full_app_admin.dart';
 import 'package:yoven/helpers/theme/app_theme.dart';
 // import 'package:yoven/helpers/utils/generator.dart';
 import 'package:yoven/helpers/widgets/my_spacing.dart';
@@ -146,7 +147,7 @@ class _EventSingleEventScreenState extends State<EventSingleEventScreen> {
         Stack(
           children: [
             Image(
-              image: AssetImage('${widget.image}'),
+              image: NetworkImage('${widget.image}'),
               fit: BoxFit.cover,
               width: MediaQuery.of(context).size.width,
               height: 240,
@@ -391,12 +392,21 @@ class _EventSingleEventScreenState extends State<EventSingleEventScreen> {
                   // Code to execute if the user is not registered
                   // For example, show a registration button
                   _btnCreate(); 
+                  if(uid == 'sUgTG8Lb4qeRGidbWKPgXqQx0NE2'){
                    Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => EventFullApp(),
+                      builder: (context) => EventFullAppAdmin(),
                     ),
                   );
+                  }else{
+                    Navigator.push(
+                      context,
+                        MaterialPageRoute(
+                          builder: (context) => EventFullApp(),
+                      ),
+                    );
+                  }
                 },
                 style: ButtonStyle(
                   elevation: MaterialStateProperty.all(0),

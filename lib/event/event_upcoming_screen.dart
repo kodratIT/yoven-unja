@@ -161,7 +161,7 @@ Future<List<Map<String, dynamic>>> _initializeData() async {
               return Column(
                 children: [
                   singleEvent(
-                    image: 'assets/images/profile/avatar_2.jpg',
+                    image: imagePath,
                     time: time,
                     date: date,
                     name: name,
@@ -215,7 +215,7 @@ Future<List<Map<String, dynamic>>> _initializeData() async {
             ClipRRect(
               borderRadius: BorderRadius.all(Radius.circular(8)),
               child: Image(
-                image: AssetImage(image),
+                image: NetworkImage(image),
                 width: 100,
                 height: 72,
                 fit: BoxFit.cover,

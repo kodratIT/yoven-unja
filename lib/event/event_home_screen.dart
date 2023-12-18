@@ -181,7 +181,7 @@ class _EventHomeScreenState extends State<EventHomeScreen> {
                         margin: MySpacing.fromLTRB(24, 16, 0, 0),
                         child: singleEvent(
                           title: event.name,
-                          image: './assets/images/apps/event/pattern-1.png',
+                          image: event.images,
                           date: event.dateEvent,
                           // month: 's',
                           subject: event.locationDetail,
@@ -227,7 +227,7 @@ class _EventHomeScreenState extends State<EventHomeScreen> {
                         margin: MySpacing.fromLTRB(24, 16, 24, 16),
                         child: singleEvent(
                           title: event.name,
-                          image: './assets/images/apps/event/pattern-2.png',
+                          image: event.images,
                           date: event.dateEvent,
                           // month: 's',
                           subject: event.locationDetail,
@@ -335,11 +335,11 @@ class _EventHomeScreenState extends State<EventHomeScreen> {
                       topLeft: Radius.circular(2),
                       topRight: Radius.circular(2)),
                   child: Image(
-                    image: AssetImage(image),
+                    image: NetworkImage(image), // Ganti dengan URL gambar dari jaringan
                     fit: BoxFit.cover,
                     width: width,
-                    height: width * 0.55,
-                  ),
+                    height: 200,
+                  )
                 ),
                 Positioned(
                   bottom: -16,

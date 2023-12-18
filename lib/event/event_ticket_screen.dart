@@ -53,7 +53,7 @@ class _EventTicketScreenState extends State<EventTicketScreen> {
         Stack(
           children: [
             Image(
-              image: AssetImage('${widget.image}'),
+              image: NetworkImage('${widget.image}'),
               fit: BoxFit.cover,
               width: MediaQuery.of(context).size.width,
               height: 240,
