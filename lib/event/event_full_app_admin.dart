@@ -16,12 +16,15 @@ import 'package:flutter/material.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 import 'package:provider/provider.dart';
 
-class EventFullApp extends StatefulWidget {
+class EventFullAppAdmin extends StatefulWidget {
+
+  
+
   @override
   _EventFullAppState createState() => _EventFullAppState();
 }
 
-class _EventFullAppState extends State<EventFullApp>
+class _EventFullAppState extends State<EventFullAppAdmin>
     with SingleTickerProviderStateMixin {
   int _currentIndex = 0;
 
@@ -42,7 +45,7 @@ class _EventFullAppState extends State<EventFullApp>
     customTheme = AppTheme.customTheme;
     theme = AppTheme.theme;
     _name = getCurrentUserId();
-    _tabController = TabController(length: 3, vsync: this, initialIndex: 0);
+    _tabController = TabController(length: 4, vsync: this, initialIndex: 0);
     _tabController!.addListener(_handleTabSelection);
     _tabController!.animation!.addListener(() {
       final aniValue = _tabController!.animation!.value;
@@ -136,9 +139,34 @@ Widget build(BuildContext context) {
                               color: theme.colorScheme.onBackground,
                             ),
                     ),
-                  
                   Container(
                     child: (_currentIndex == 1)
+                        ? Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: <Widget>[
+                              Icon(
+                                LucideIcons.plus,
+                                color: theme.colorScheme.primary,
+                              ),
+                              Container(
+                                margin: EdgeInsets.only(top: 4),
+                                decoration: BoxDecoration(
+                                  color: theme.primaryColor,
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(2.5)),
+                                ),
+                                height: 5,
+                                width: 5,
+                              )
+                            ],
+                          )
+                        : Icon(
+                            LucideIcons.plus,
+                            color: theme.colorScheme.onBackground,
+                          ),
+                  ),
+                  Container(
+                    child: (_currentIndex == 2)
                         ? Column(
                             mainAxisSize: MainAxisSize.min,
                             children: <Widget>[
@@ -164,7 +192,7 @@ Widget build(BuildContext context) {
                           ),
                   ),
                   Container(
-                    child: (_currentIndex == 2)
+                    child: (_currentIndex == 3)
                         ? Column(
                             mainAxisSize: MainAxisSize.min,
                             children: <Widget>[
@@ -197,8 +225,9 @@ Widget build(BuildContext context) {
           controller: _tabController,
           children: <Widget>[
               EventHomeScreen() ,
-              EventUpcomingScreen(),
-              EventProfileScreen(),
+              EventCreateScreen(),
+            EventUpcomingScreen(),
+            EventProfileScreen(),
           ],
         ),
         ),

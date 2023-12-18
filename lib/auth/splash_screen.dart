@@ -1,3 +1,4 @@
+import 'package:get/get.dart';
 import 'package:yoven/auth/login_screen.dart';
 import 'package:yoven/auth/register_screen.dart';
 import 'package:yoven/helpers/theme/app_notifier.dart';
@@ -76,6 +77,7 @@ class _SplashScreenState extends State<SplashScreen> {
                                 builder: (context) =>
                                     Register()),
                           );
+                          // Get.off(Register());
                         },
                         child: MyText.labelLarge(
                           "SIGN UP",

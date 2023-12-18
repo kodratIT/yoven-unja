@@ -8,6 +8,26 @@ import 'package:flutter/material.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 
 class EventTicketScreen extends StatefulWidget {
+
+  final int eventId; 
+  final String title; 
+  final String date; 
+  final String subject; 
+  final String time; 
+  final String image; 
+  final String about; 
+  final String locationDetail;
+  EventTicketScreen({
+    required this.eventId,
+    required this.title,
+    required this.subject,
+    required this.date,
+    required this.time,
+    required this.image,
+    required this.about,
+    required this.locationDetail,
+    });
+
   @override
   _EventTicketScreenState createState() => _EventTicketScreenState();
 }
@@ -33,7 +53,7 @@ class _EventTicketScreenState extends State<EventTicketScreen> {
         Stack(
           children: [
             Image(
-              image: AssetImage('./assets/images/apps/event/pattern-1.png'),
+              image: AssetImage('${widget.image}'),
               fit: BoxFit.cover,
               width: MediaQuery.of(context).size.width,
               height: 240,
@@ -89,7 +109,7 @@ class _EventTicketScreenState extends State<EventTicketScreen> {
                   children: [
                     Expanded(
                       child: MyText.headlineSmall(
-                          'Widgets of the Week - Flutter',
+                          '${widget.title}',
                           fontSize: 22,
                           color: theme.colorScheme.onBackground,
                           fontWeight: 600),
@@ -132,12 +152,12 @@ class _EventTicketScreenState extends State<EventTicketScreen> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                MyText.bodySmall("Friday",
+                                MyText.bodySmall("${widget.date}",
                                     fontWeight: 600,
                                     color: theme.colorScheme.onBackground),
                                 Container(
                                   margin: MySpacing.top(2),
-                                  child: MyText.bodySmall("8:30 - 11:30 AM",
+                                  child: MyText.bodySmall("${widget.time}",
                                       fontSize: 12,
                                       fontWeight: 500,
                                       color: theme.colorScheme.onBackground,
@@ -147,34 +167,34 @@ class _EventTicketScreenState extends State<EventTicketScreen> {
                             ),
                           ),
                         ),
-                        Container(
-                          padding: MySpacing.fromLTRB(16, 4, 4, 4),
-                          decoration: BoxDecoration(
-                              color: theme.colorScheme.primary.withAlpha(28),
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(32))),
-                          child: Row(
-                            children: [
-                              MyText.bodySmall("Add to Reminder",
-                                  letterSpacing: 0,
-                                  fontSize: 12,
-                                  color: theme.colorScheme.primary,
-                                  fontWeight: 400),
-                              Container(
-                                padding: MySpacing.all(8),
-                                margin: MySpacing.left(8),
-                                decoration: BoxDecoration(
-                                    color: theme.colorScheme.primary,
-                                    shape: BoxShape.circle),
-                                child: Icon(
-                                  LucideIcons.plus,
-                                  color: theme.colorScheme.onPrimary,
-                                  size: 18,
-                                ),
-                              )
-                            ],
-                          ),
-                        )
+                        // Container(
+                        //   padding: MySpacing.fromLTRB(16, 4, 4, 4),
+                        //   decoration: BoxDecoration(
+                        //       color: theme.colorScheme.primary.withAlpha(28),
+                        //       borderRadius:
+                        //           BorderRadius.all(Radius.circular(32))),
+                        //   child: Row(
+                        //     children: [
+                        //       MyText.bodySmall("Add to Reminder",
+                        //           letterSpacing: 0,
+                        //           fontSize: 12,
+                        //           color: theme.colorScheme.primary,
+                        //           fontWeight: 400),
+                        //       Container(
+                        //         padding: MySpacing.all(8),
+                        //         margin: MySpacing.left(8),
+                        //         decoration: BoxDecoration(
+                        //             color: theme.colorScheme.primary,
+                        //             shape: BoxShape.circle),
+                        //         child: Icon(
+                        //           LucideIcons.plus,
+                        //           color: theme.colorScheme.onPrimary,
+                        //           size: 18,
+                        //         ),
+                        //       )
+                        //     ],
+                        //   ),
+                        // )
                       ],
                     ),
                   ],
@@ -211,18 +231,12 @@ class _EventTicketScreenState extends State<EventTicketScreen> {
                 child: RichText(
                   text: TextSpan(children: <TextSpan>[
                     TextSpan(
-                        text: Generator.getDummyText(20),
+                        text: "${widget.about}",
                         style: MyTextStyle.titleSmall(
                             color: theme.colorScheme.onBackground,
                             muted: true,
                             letterSpacing: 0.3,
                             fontWeight: 500)),
-                    TextSpan(
-                        text: "Read More",
-                        style: MyTextStyle.bodySmall(
-                            letterSpacing: 0.3,
-                            color: theme.colorScheme.primary,
-                            fontWeight: 600))
                   ]),
                 ),
               ),
@@ -248,7 +262,15 @@ class _EventTicketScreenState extends State<EventTicketScreen> {
                   onPressed: () {
                     showDialog(
                         context: context,
-                        builder: (BuildContext context) => EventTicketDialog());
+                        builder: (BuildContext context) => EventTicketDialog(
+                          title: '${widget.title}',
+                          time: '${widget.time}',
+                          date: '${widget.date}',
+                          image: '${widget.image}',
+                          location: '${widget.subject}',
+                          locationDetail: '${widget.locationDetail}',
+
+                        ));
                   },
                   style: ButtonStyle(
                       elevation: MaterialStatePropertyAll(0),

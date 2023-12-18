@@ -1,5 +1,12 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:get/get.dart';
+import 'package:intl/intl.dart';
+import 'package:yoven/event/event_full_app.dart';
+import 'package:yoven/event/event_full_app_admin.dart';
 import 'package:yoven/helpers/theme/app_theme.dart';
 import 'package:yoven/helpers/widgets/my_container.dart';
 import 'package:yoven/helpers/widgets/my_text.dart';
@@ -9,26 +16,222 @@ import 'package:yoven/helpers/widgets/my_button.dart';
 import 'package:yoven/helpers/widgets/my_text_style.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../auth/firebase_auth_/showToast.dart';
+
 class EventProfileScreen extends StatefulWidget {
   @override
   _EventProfileScreenState createState() => _EventProfileScreenState();
 }
 
 class _EventProfileScreenState extends State<EventProfileScreen> {
-  bool _passwordVisible = false;
+  // bool _passwordVisible = false;
   late CustomTheme customTheme;
   late ThemeData theme;
+
+  late String _emailUser= '';
+  late String _userId ='';
+  Map<String, dynamic>? DataUser ;
+  late List<Map<String, dynamic>?> userDataList;
+  String _imagesurl = '';
+
+ 
 
   final ImagePicker picker = ImagePicker();
 
   XFile? imageFile;
 
+  File? imageFile1;
+  
+  
   @override
   void initState() {
     super.initState();
     customTheme = AppTheme.customTheme;
     theme = AppTheme.theme;
+    _emailUser = getCurrentUserEmail();
+    _userId = getCurrentUserId();
+    // _getUsers(_userId);
+    fetchData(_userId);
+    
+  
+  } 
+
+  TextEditingController _nameController = TextEditingController();
+  TextEditingController _phoneController = TextEditingController();
+
+
+  String getCurrentUserEmail() {
+  User? user = FirebaseAuth.instance.currentUser;
+
+  // Check if there is a currently signed-in user
+  if (user != null) {
+    
+    return user.email.toString();
+  } else {
+    // No user is signed in
+      return '';
+    }
   }
+
+  String getCurrentUserId() {
+  User? user = FirebaseAuth.instance.currentUser;
+
+  // Check if there is a currently signed-in user
+  if (user != null) {
+    
+    return user.uid;
+  } else {
+    // No user is signed in
+      return '';
+    }
+  }
+
+  bool isLoading = true;
+  void fetchData(String userId)async {
+    DataUser = await _getUsers(userId);
+
+    _nameController = TextEditingController(text: DataUser?['name'].toString());
+    _phoneController = TextEditingController(text: DataUser?['mobile_phone'].toString());
+    _imagesurl = DataUser!['images'].toString();
+  }
+
+  Future<Map<String, dynamic>?> _getUsers(String userid) async {
+  CollectionReference users = FirebaseFirestore.instance.collection('users');
+
+  try {
+    QuerySnapshot<Object?> querySnapshot =
+        await users.where('id', isEqualTo: userid).get();
+
+    userDataList = [];
+    if (querySnapshot.docs.isNotEmpty) {
+      // Assuming 'id' is a unique identifier, there should be at most one document
+      // Access the data from the first document
+      Map<String, dynamic> userData = querySnapshot.docs[0].data() as Map<String, dynamic>;
+
+      // Print the user data
+      print('User Data:');
+      userData.forEach((key, value) {
+        print('$key: $value');
+      });
+
+      return userData;
+    } else {
+      // Handle the case where no user with the given ID is found
+      print('User not found');
+      return null;
+    }
+
+  } catch (e) {
+    // Handle errors, e.g., Firebase errors
+    print('Error querying users collection: $e');
+    // You can also throw the exception if you want to propagate it
+    throw e;
+  }
+}
+
+  void _save()async
+  {
+    _uploadImage();
+    // Navigator.of(context).pushReplacement(
+    //   MaterialPageRoute(builder: (context) => EventFullAppAdmin()),
+    // );
+  }
+
+  Future<void> updateUserData(String userId, String newName, String newMobilePhone,String Images) async {
+  CollectionReference users = FirebaseFirestore.instance.collection('users');
+
+  try {
+    // Fetch the user document
+    QuerySnapshot<Object?> querySnapshot =
+        await users.where('id', isEqualTo: userId).get();
+
+    if (querySnapshot.docs.isNotEmpty) {
+      // Assuming 'id' is a unique identifier, there should be at most one document
+      DocumentSnapshot<Object?> userDocument = querySnapshot.docs[0];
+      // Update the user data
+      print(Images);
+      if(Images == 'null'){
+        await users.doc(userDocument.id).update({
+          'name': newName,
+          'mobile_phone': newMobilePhone,
+        });
+      }else{
+        await users.doc(userDocument.id).update({
+        'name': newName,
+        'mobile_phone': newMobilePhone,
+        'images' : Images
+      });
+      }
+
+      print('user success');
+
+    } else {
+      print('User not found for ID: $userId');
+    }
+  } catch (e) {
+    // Handle errors if needed
+    print('Error updating user data: $e');
+  }
+}
+
+   File? _imageFile;
+  String? _downloadURL;
+
+  Future<void> _pickImage() async {
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+
+    setState(() {
+      if (pickedFile != null) {
+        _imageFile = File(pickedFile.path);
+      }
+    });
+  }
+
+  Future<String?> _uploadImage() async {
+    String _LinkImages ='';
+    if (_imageFile == null) {
+      print('No image selected');
+      updateUserData(_userId, _nameController.text, _phoneController.text,'null');
+      return '';
+    }
+    String extension = 'jpg';
+    String imageName = generateUniqueImageName(extension); // Nama gambar yang akan disimpan
+
+    try {
+      Reference storageReference =
+          FirebaseStorage.instance.ref().child('images/$imageName');
+      UploadTask uploadTask = storageReference.putFile(_imageFile!);
+      TaskSnapshot taskSnapshot = await uploadTask.whenComplete(() => null);
+      _downloadURL = await taskSnapshot.ref.getDownloadURL();
+
+      _LinkImages = _downloadURL!;
+
+      updateUserData(_userId, _nameController.text, _phoneController.text,_LinkImages);
+     
+      print('Download URL: $_downloadURL');
+    } catch (e) {
+      print('Error uploading image: $e');
+    }
+
+    return _LinkImages;
+
+  }
+
+  String generateUniqueImageName(String extension) {
+  // Mendapatkan timestamp saat ini
+  DateTime now = DateTime.now();
+
+  // Format timestamp sebagai string untuk digunakan sebagai nama gambar
+  String formattedTimestamp = DateFormat('yyyyMMdd_HHmmss').format(now);
+
+  // Menyusun nama gambar dengan format 'image_timestamp'
+  String imageName = 'image_$formattedTimestamp.$extension';
+
+  return imageName;
+}
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -57,29 +260,26 @@ class _EventProfileScreenState extends State<EventProfileScreen> {
                         width: 140,
                         height: 140,
                         clipBehavior: Clip.antiAliasWithSaveLayer,
-                        child: imageFile == null
-                            ? Image(
-                                image: AssetImage(
-                                  "./assets/images/profile/avatar_4.jpg",
-                                ),
-                                fit: BoxFit.fill,
-                              )
-                            : Image.file(
-                                File(
-                                  imageFile!.path,
-                                ),
-                                fit: BoxFit.cover,
+                       child: _imageFile == null
+                          ? Image.network(
+                              "${_imagesurl}",
+                              fit: BoxFit.fill,
+                            )
+                          : Image.file(
+                              File(
+                                _imageFile!.path,
                               ),
+                              fit: BoxFit.cover,
+                            ),
                       ),
                       Positioned(
                         bottom: 8,
                         right: 8,
                         child: InkWell(
-                          onTap: () async {
-                            imageFile = await picker.pickImage(
-                              source: ImageSource.gallery,
-                            );
-                            setState(() {});
+                          onTap: () {
+                            _pickImage();
+
+                            // print(imageFile);
                           },
                           child: MyContainer.rounded(
                             border: Border.all(
@@ -98,9 +298,8 @@ class _EventProfileScreenState extends State<EventProfileScreen> {
                       )
                     ],
                   ),
-                  MyText.titleLarge("Marcelina Willis",
+                  MyText.titleLarge(_nameController.text,
                       fontWeight: 600, letterSpacing: 0),
-                  MyText.titleSmall("UI Designer", fontWeight: 500),
                 ],
               ),
             ),
@@ -116,7 +315,7 @@ class _EventProfileScreenState extends State<EventProfileScreen> {
                           color: theme.colorScheme.onBackground,
                           fontWeight: 500),
                       decoration: InputDecoration(
-                        hintText: "Name",
+                        hintText: _nameController.text,
                         hintStyle: MyTextStyle.titleSmall(
                             letterSpacing: 0.1,
                             color: theme.colorScheme.onBackground,
@@ -143,20 +342,20 @@ class _EventProfileScreenState extends State<EventProfileScreen> {
                         ),
                         contentPadding: EdgeInsets.all(0),
                       ),
-                      controller:
-                          TextEditingController(text: "Marcelina Willis"),
+                      controller:_nameController,
                       textCapitalization: TextCapitalization.sentences,
                     ),
                   ),
                   Container(
                     margin: EdgeInsets.only(top: 20),
                     child: TextFormField(
+                      readOnly: true,
                       style: MyTextStyle.bodyLarge(
                           letterSpacing: 0.1,
                           color: theme.colorScheme.onBackground,
                           fontWeight: 500),
                       decoration: InputDecoration(
-                        hintText: "Email",
+                        hintText: "${_emailUser}",
                         hintStyle: MyTextStyle.titleSmall(
                             letterSpacing: 0.1,
                             color: theme.colorScheme.onBackground,
@@ -184,7 +383,7 @@ class _EventProfileScreenState extends State<EventProfileScreen> {
                         contentPadding: EdgeInsets.all(0),
                       ),
                       keyboardType: TextInputType.emailAddress,
-                      controller: TextEditingController(text: "nat@gmail.com"),
+                      controller: TextEditingController(text: "${_emailUser}"),
                       textCapitalization: TextCapitalization.sentences,
                     ),
                   ),
@@ -225,64 +424,23 @@ class _EventProfileScreenState extends State<EventProfileScreen> {
                       ),
                       keyboardType: TextInputType.emailAddress,
                       textCapitalization: TextCapitalization.sentences,
-                      controller: TextEditingController(text: "091-987456321"),
+                      controller: _phoneController,
                     ),
                   ),
-                  Container(
-                    margin: EdgeInsets.only(top: 20),
-                    child: TextFormField(
-                      style: MyTextStyle.bodyLarge(
-                          letterSpacing: 0.1,
-                          color: theme.colorScheme.onBackground,
-                          fontWeight: 500),
-                      decoration: InputDecoration(
-                        hintText: "Change Password",
-                        hintStyle: MyTextStyle.titleSmall(
-                            letterSpacing: 0.1,
-                            color: theme.colorScheme.onBackground,
-                            fontWeight: 500),
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(8.0),
-                            ),
-                            borderSide: BorderSide.none),
-                        enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(8.0),
-                            ),
-                            borderSide: BorderSide.none),
-                        focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(8.0),
-                            ),
-                            borderSide: BorderSide.none),
-                        filled: true,
-                        fillColor: customTheme.card,
-                        prefixIcon: Icon(
-                          LucideIcons.lock,
-                        ),
-                        suffixIcon: IconButton(
-                          icon: Icon(
-                            _passwordVisible
-                                ? LucideIcons.eye
-                                : LucideIcons.eyeOff,
-                          ),
-                          onPressed: () {
-                            setState(() {
-                              _passwordVisible = !_passwordVisible;
-                            });
-                          },
-                        ),
-                        contentPadding: EdgeInsets.all(0),
-                      ),
-                      textCapitalization: TextCapitalization.sentences,
-                      obscureText: _passwordVisible,
-                    ),
-                  ),
+                
                   Container(
                     margin: EdgeInsets.only(top: 24),
                     child: MyButton(
-                        onPressed: () {},
+                        onPressed: (){
+                           if(_emailUser == 'kodratcoc@gmail.com'){
+                            showToast(message: "Profile Successfully updated");
+                            _save();
+                           }else{
+                            _save();
+                            Get.off(EventFullApp());
+                            showToast(message: "Profile Successfully updated");
+                           }
+                        },
                         borderRadiusAll: 4,
                         elevation: 0,
                         child: MyText.labelMedium("UPDATE",

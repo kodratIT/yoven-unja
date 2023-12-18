@@ -1,12 +1,14 @@
 // import 'package:yoven/homepage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:get/get.dart';
 import 'package:yoven/auth/firebase_auth_/firebase_auth_services.dart';
 import 'package:yoven/auth/firebase_auth_/showToast.dart';
 import 'package:yoven/auth/register_screen.dart';
 // import 'package:yoven/full.dart';
 // import 'package:yoven/homepage.dart';
 import 'package:yoven/event/event_full_app.dart';
+import 'package:yoven/event/event_full_app_admin.dart';
 import 'package:yoven/helpers/theme/app_theme.dart';
 import 'package:yoven/helpers/widgets/my_button.dart';
 import 'package:yoven/helpers/widgets/my_container.dart';
@@ -40,7 +42,7 @@ class _LoginScreen extends State<Login> {
     _passwordController.dispose();
     super.dispose();
   }
-  bool? _passwordVisible = false;
+  bool? _passwordVisible = true;
   // late CustomTheme customTheme;
   late ThemeData theme;
 
@@ -203,7 +205,19 @@ class _LoginScreen extends State<Login> {
 
   if (user != null) {
     showToast(message: "User is successfully signed in");
-    Navigator.pushReplacement(context,MaterialPageRoute(builder: (context) => EventFullApp()));
+    if(user.email == 'kodratcoc@gmail.com'){
+    //   Navigator.of(context, rootNavigator: true).pushReplacement(
+    //   PageRouteBuilder(
+    //     transitionDuration: Duration(seconds: 2),
+    //     pageBuilder: (_, __, ___) => EventFullAppAdmin(),
+    //   ),
+    // );
+      Get.off(EventFullAppAdmin());
+      // Navigator.pop(context,MaterialPageRoute(builder: (context) => EventFullAppAdmin()));
+    }else{
+      Get.off(EventFullApp());
+      // Navigator.pushReplacement(context,MaterialPageRoute(builder: (context) => EventFullApp()));
+    }
   } else {
     showToast(message: "Email/Password Wrong");
   }

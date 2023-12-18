@@ -5,6 +5,7 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:get/get.dart';
 import 'package:yoven/auth/firebase_auth_/firebase_auth_services.dart';
 import 'package:yoven/auth/firebase_auth_/showToast.dart';
 import 'package:yoven/auth/login_screen.dart';
@@ -260,7 +261,8 @@ class _RegisterScreen extends State<Register> {
 
       CreateData(user.uid,_usernameController.text,int.parse(_numberController.text));
       showToast(message: "User is successfully created");
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => EventFullApp()));
+      Get.off(EventFullApp());
+      // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => EventFullApp()));
     } else {
       showToast(message: "Some error happend");
     }

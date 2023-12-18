@@ -5,6 +5,21 @@ import 'package:yoven/helpers/widgets/my_text.dart';
 import 'package:flutter/material.dart';
 
 class EventTicketDialog extends StatefulWidget {
+
+  final String title; 
+  final String date; 
+  final String time; 
+  final String image; 
+  final String location;
+  final String locationDetail;
+  EventTicketDialog({
+    required this.title,
+    required this.date,
+    required this.time,
+    required this.image,
+    required this.location,
+    required this.locationDetail,
+    });
   @override
   _EventTicketDialogState createState() => _EventTicketDialogState();
 }
@@ -43,7 +58,7 @@ class _EventTicketDialogState extends State<EventTicketDialog> {
             ),
             Container(
               margin: MySpacing.fromLTRB(16, 16, 16, 0),
-              child: MyText.bodyLarge("Flutter Event - 1",
+              child: MyText.bodyLarge("${widget.title}",
                   color: theme.colorScheme.onBackground, fontWeight: 600),
             ),
             Container(
@@ -58,7 +73,7 @@ class _EventTicketDialogState extends State<EventTicketDialog> {
                         MyText.bodySmall("Date",
                             color: theme.colorScheme.onBackground,
                             xMuted: true),
-                        MyText.bodyMedium("Fri, April 12, 2020",
+                        MyText.bodyMedium("${widget.date}",
                             color: theme.colorScheme.onBackground)
                       ],
                     ),
@@ -70,7 +85,7 @@ class _EventTicketDialogState extends State<EventTicketDialog> {
                         MyText.bodySmall("Time",
                             color: theme.colorScheme.onBackground,
                             xMuted: true),
-                        MyText.bodyMedium("8:15 AM",
+                        MyText.bodyMedium("${widget.time}",
                             color: theme.colorScheme.onBackground),
                       ],
                     ),
@@ -85,7 +100,7 @@ class _EventTicketDialogState extends State<EventTicketDialog> {
                 children: [
                   MyText.bodySmall("Place",
                       xMuted: true, color: theme.colorScheme.onBackground),
-                  MyText.bodyLarge("Parker Drive\n35, County Line Road",
+                  MyText.bodyLarge("${widget.location}\n${widget.locationDetail}",
                       color: theme.colorScheme.onBackground, fontWeight: 500)
                 ],
               ),
