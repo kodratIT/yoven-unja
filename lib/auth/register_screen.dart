@@ -29,7 +29,6 @@ class Register extends StatefulWidget {
 }
 
 class _RegisterScreen extends State<Register> {
-
   final FirebaseAuthService _auth = FirebaseAuthService();
 
   TextEditingController _usernameController = TextEditingController();
@@ -38,7 +37,7 @@ class _RegisterScreen extends State<Register> {
   TextEditingController _passwordController = TextEditingController();
 
   bool isSigningUp = false;
-   @override
+  @override
   void dispose() {
     _usernameController.dispose();
     _numberController.dispose();
@@ -47,34 +46,29 @@ class _RegisterScreen extends State<Register> {
     super.dispose();
   }
 
-   Future<void> _createDetailUser(UserModel userDetail) async {
-  try {
-    // Assuming 'user_details' is the collection name for user details
-    await FirebaseFirestore.instance.collection('users').add({
-      'id': userDetail.id,
-      'name': userDetail.name,
-      'phone_number': userDetail.mobilePhone,
-    });
+  Future<void> _createDetailUser(UserModel userDetail) async {
+    try {
+      // Assuming 'user_details' is the collection name for user details
+      await FirebaseFirestore.instance.collection('users').add({
+        'id': userDetail.id,
+        'name': userDetail.name,
+        'phone_number': userDetail.mobilePhone,
+      });
 
-    print('User details added successfully');
-  } catch (e) {
-    print('Error adding user details: $e');
+      print('User details added successfully');
+    } catch (e) {
+      print('Error adding user details: $e');
     }
   }
 
-
-  void CreateData(String _id,String name,int phone)async{
+  void CreateData(String _id, String name, int phone) async {
     UserModel UserNew = UserModel(
-      id: _id,
-      name: name,
-      mobilePhone:phone,
-      createdAt: DateTime.now()
-    );
+        id: _id, name: name, mobilePhone: phone, createdAt: DateTime.now());
 
     await _createDetailUser(UserNew);
   }
 
-  bool _passwordVisible = false;
+  bool _passwordVisible = true;
   late CustomTheme customTheme;
   late ThemeData theme;
 
@@ -111,7 +105,8 @@ class _RegisterScreen extends State<Register> {
                       child: MyText.titleLarge("REGISTER", fontWeight: 600),
                     ),
                     Container(
-                      padding: const EdgeInsets.only(left: 16, right: 16, top: 8),
+                      padding:
+                          const EdgeInsets.only(left: 16, right: 16, top: 8),
                       child: Column(
                         children: <Widget>[
                           Container(
@@ -146,7 +141,6 @@ class _RegisterScreen extends State<Register> {
                               ),
                               keyboardType: TextInputType.emailAddress,
                               controller: _emailController,
-
                             ),
                           ),
                           Container(
@@ -164,7 +158,6 @@ class _RegisterScreen extends State<Register> {
                               ),
                               keyboardType: TextInputType.number,
                               controller: _numberController,
-
                             ),
                           ),
                           Container(
@@ -194,18 +187,18 @@ class _RegisterScreen extends State<Register> {
                               obscureText: _passwordVisible,
                             ),
                           ),
-                           Container(
-                                margin: const EdgeInsets.only(top: 24),
-                                child: MyButton(
-                                    elevation: 0,
-                                    borderRadiusAll: 4,
-                                    onPressed: () {
-                                      _signUp();
-                                    },
-                                    padding: MySpacing.xy(20, 20),
-                                    child: MyText.labelMedium("REGISTER",
-                                        fontWeight: 600,
-                                        color: theme.colorScheme.onPrimary))),
+                          Container(
+                              margin: const EdgeInsets.only(top: 24),
+                              child: MyButton(
+                                  elevation: 0,
+                                  borderRadiusAll: 4,
+                                  onPressed: () {
+                                    _signUp();
+                                  },
+                                  padding: MySpacing.xy(20, 20),
+                                  child: MyText.labelMedium("REGISTER",
+                                      fontWeight: 600,
+                                      color: theme.colorScheme.onPrimary))),
                         ],
                       ),
                     )
@@ -240,8 +233,7 @@ class _RegisterScreen extends State<Register> {
     ));
   }
 
-   void _signUp() async {
-
+  void _signUp() async {
     setState(() {
       isSigningUp = true;
     });
@@ -251,6 +243,7 @@ class _RegisterScreen extends State<Register> {
     String email = _emailController.text;
     String password = _passwordController.text;
 
+//authifikasi nya
     User? user = await _auth.signUpWithEmailAndPassword(email, password);
 
     setState(() {
@@ -258,8 +251,9 @@ class _RegisterScreen extends State<Register> {
     });
 
     if (user != null) {
-
-      CreateData(user.uid,_usernameController.text,int.parse(_numberController.text));
+//firestore setelah memastikan keadaan akun
+      CreateData(user.uid, _usernameController.text,
+          int.parse(_numberController.text));
       showToast(message: "User is successfully created");
       Get.off(EventFullApp());
       // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => EventFullApp()));
