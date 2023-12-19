@@ -1,4 +1,7 @@
 // import 'package:yoven/event/event_filter_dialog.dart';
+import 'package:get/get.dart';
+import 'package:intl/intl.dart';
+import 'package:yoven/event/event_profile_screen.dart';
 import 'package:yoven/event/event_single_event_screen.dart';
 import 'package:yoven/helpers/theme/app_theme.dart';
 import 'package:yoven/helpers/widgets/my_container.dart';
@@ -20,6 +23,13 @@ class _EventHomeScreenState extends State<EventHomeScreen> {
   late CustomTheme customTheme;
   late ThemeData theme;
   late Future<List<ModelHome>> eventsList;
+
+  // Get the current date and time
+    final currentDate = DateTime.now();
+    late String formattedDateTime ='';
+
+    // Format the date
+
  
 
   @override
@@ -27,6 +37,13 @@ class _EventHomeScreenState extends State<EventHomeScreen> {
     super.initState();
     customTheme = AppTheme.customTheme;
     theme = AppTheme.theme;
+    final formattedDate = DateFormat('d MMM, y').format(currentDate);
+
+    // Format the time
+    final formattedTime = DateFormat('HH:mm:ss').format(currentDate);
+
+    // Combine date and time
+    formattedDateTime = 'Today $formattedDate $formattedTime';
     // eventsList = fetchData();
   }
 
@@ -65,7 +82,7 @@ class _EventHomeScreenState extends State<EventHomeScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    MyText.bodyMedium("Today 24 Aug, 2020",
+                    MyText.bodyMedium(formattedDateTime,
                         fontWeight: 400,
                         letterSpacing: 0,
                         color: theme.colorScheme.onBackground),
@@ -102,6 +119,8 @@ class _EventHomeScreenState extends State<EventHomeScreen> {
                 ],
               ),
               MyContainer.none(
+                onTap: () {
+                },
                 margin: MySpacing.left(16),
                 borderRadiusAll: 4,
                 clipBehavior: Clip.antiAliasWithSaveLayer,

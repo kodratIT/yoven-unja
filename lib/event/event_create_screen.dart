@@ -50,7 +50,7 @@ class _EventCreateScreenState extends State<EventCreateScreen> {
     return currentCount + 1;
   }
 
-  Future<void> addEventWithAutoIncrement() async {
+  Future<void> addEventWithAutoIncrement(String URL) async {
     final CollectionReference events = FirebaseFirestore.instance.collection('events');
     final int nextId = await getNextId();
     try {
@@ -91,7 +91,6 @@ class _EventCreateScreenState extends State<EventCreateScreen> {
   void addEvent() async {
 
     _uploadImage();
-    addEventWithAutoIncrement();
   }
 
 
@@ -122,6 +121,8 @@ class _EventCreateScreenState extends State<EventCreateScreen> {
       TaskSnapshot taskSnapshot = await uploadTask.whenComplete(() => null);
       _downloadURL = await taskSnapshot.ref.getDownloadURL();
       
+      String? UrlImage = _downloadURL;
+      addEventWithAutoIncrement(UrlImage!);
       
       print('Download URL: $_downloadURL');
     } catch (e) {
