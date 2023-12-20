@@ -159,7 +159,7 @@ Future<List<Map<String, dynamic>>> _initializeData() async {
               List<String> words = name.split(" ");
 
               // Mengambil maksimal tiga kata dari array kata
-              List<String> slicedWords = words.length > 3 ? words.sublist(0, 3) : words;
+              List<String> slicedWords = words.length > 2 ? words.sublist(0, 2) : words;
 
               // Menggabungkan kata-kata menjadi string baru
               String result = slicedWords.join(" ");
