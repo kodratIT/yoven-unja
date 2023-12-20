@@ -37,7 +37,7 @@ class _RegisterScreen extends State<Register> {
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
 
-  bool isSigningUp = false;
+  bool isSigningUp = true;
    @override
   void dispose() {
     _usernameController.dispose();
