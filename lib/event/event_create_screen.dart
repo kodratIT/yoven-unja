@@ -190,9 +190,8 @@ class _EventCreateScreenState extends State<EventCreateScreen> {
                     children: [
                       ClipRRect(
                         borderRadius: BorderRadius.all(Radius.circular(4)),
-                        child: Image(
-                          image: AssetImage(
-                              './assets/images/profile/avatar_4.jpg'),
+                       child: Image.network(
+                          'https://firebasestorage.googleapis.com/v0/b/yoven-b885c.appspot.com/o/images%2Fimage_20231218_153211.jpg?alt=media&token=81e4a9d3-0c78-4120-886b-afde4900ea2d',
                           width: 44,
                           height: 44,
                         ),
@@ -563,7 +562,7 @@ class _EventCreateScreenState extends State<EventCreateScreen> {
                 ),
                 Container(
                   color: theme.colorScheme.background,
-                  margin: EdgeInsets.only(left: 0,top: 10,right: 0,bottom: 0),
+                  margin: EdgeInsets.only(left: 0,top: 10,right: 0,bottom: 10),
                   child: Center(
                     child: CupertinoButton(
                     color: theme.colorScheme.onSurface,

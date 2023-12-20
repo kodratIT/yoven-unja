@@ -22,13 +22,14 @@ class _EventHomeScreenState extends State<EventHomeScreen> {
   // List<Map<String, dynamic>> ?eventsList;
   late CustomTheme customTheme;
   late ThemeData theme;
+
+  //menyimpan data event yang di ambil dari firebase
   late Future<List<ModelHome>> eventsList;
 
-  // Get the current date and time
-    final currentDate = DateTime.now();
-    late String formattedDateTime ='';
-
-    // Format the date
+  // Get the current date and time  
+  final currentDate = DateTime.now();
+  
+  late String formattedDateTime ='';
 
  
 
@@ -37,13 +38,11 @@ class _EventHomeScreenState extends State<EventHomeScreen> {
     super.initState();
     customTheme = AppTheme.customTheme;
     theme = AppTheme.theme;
+
     final formattedDate = DateFormat('d MMM, y').format(currentDate);
 
-    // Format the time
-    final formattedTime = DateFormat('HH:mm:ss').format(currentDate);
-
     // Combine date and time
-    formattedDateTime = 'Today $formattedDate $formattedTime';
+    formattedDateTime = 'Today $formattedDate';
     // eventsList = fetchData();
   }
 
@@ -118,18 +117,18 @@ class _EventHomeScreenState extends State<EventHomeScreen> {
                   )
                 ],
               ),
-              MyContainer.none(
-                onTap: () {
-                },
-                margin: MySpacing.left(16),
-                borderRadiusAll: 4,
-                clipBehavior: Clip.antiAliasWithSaveLayer,
-                child: Image(
-                  image: AssetImage('assets/images/profile/avatar_2.jpg'),
-                  width: 36,
-                  height: 36,
-                ),
-              )
+              // MyContainer.none(
+              //   onTap: () {
+              //   },
+              //   margin: MySpacing.left(16),
+              //   borderRadiusAll: 4,
+              //   clipBehavior: Clip.antiAliasWithSaveLayer,
+              //   child: Image(
+              //     image: AssetImage('assets/images/profile/avatar_2.jpg'),
+              //     width: 36,
+              //     height: 36,
+              //   ),
+              // )
             ],
           ),
         ),
@@ -219,7 +218,7 @@ class _EventHomeScreenState extends State<EventHomeScreen> {
             ),
           ),
         ),
-         Container(
+        Container(
           margin: MySpacing.fromLTRB(24, 16, 24, 0),
           child: MyText.titleMedium("This Weekend",
               fontWeight: 700, color: theme.colorScheme.onBackground),
@@ -241,7 +240,7 @@ class _EventHomeScreenState extends State<EventHomeScreen> {
                   List<ModelHome> eventsList = snapshot.data!;
                   // Mengiterasi melalui List<ModelHome> dan membuat widget singleEvent
                   return Column(
-                    children: eventsList.take(4).map((event) {
+                    children: eventsList.map((event) {
                       return Container(
                         margin: MySpacing.fromLTRB(24, 16, 24, 16),
                         child: singleEvent(
@@ -418,10 +417,10 @@ class _EventHomeScreenState extends State<EventHomeScreen> {
                             ],
                           ),
                         ),
-                        Icon(
-                          LucideIcons.heart,
-                          color: theme.colorScheme.primary,
-                        )
+                        // Icon(
+                        //   LucideIcons.heart,
+                        //   color: theme.colorScheme.primary,
+                        // )
                       ],
                     ),
                   )

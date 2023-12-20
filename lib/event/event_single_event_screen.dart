@@ -176,17 +176,17 @@ class _EventSingleEventScreenState extends State<EventSingleEventScreen> {
                             size: 20),
                       ),
                     ),
-                    Container(
-                      padding: MySpacing.all(8),
-                      decoration: BoxDecoration(
-                        color: customTheme.card,
-                        border: Border.all(color: customTheme.border, width: 1),
-                        borderRadius: BorderRadius.all(Radius.circular(8)),
-                      ),
-                      child: Icon(LucideIcons.share,
-                          color: theme.colorScheme.onBackground.withAlpha(220),
-                          size: 20),
-                    ),
+                    // Container(
+                    //   padding: MySpacing.all(8),
+                    //   decoration: BoxDecoration(
+                    //     color: customTheme.card,
+                    //     border: Border.all(color: customTheme.border, width: 1),
+                    //     borderRadius: BorderRadius.all(Radius.circular(8)),
+                      // ),
+                      // child: Icon(LucideIcons.share,
+                      //     color: theme.colorScheme.onBackground.withAlpha(220),
+                      //     size: 20),
+                    // ),
                   ],
                 ),
               ),
@@ -216,8 +216,8 @@ class _EventSingleEventScreenState extends State<EventSingleEventScreen> {
                               .withAlpha(24)
                               .withAlpha(20),
                           borderRadius: BorderRadius.all(Radius.circular(8))),
-                      child: Icon(LucideIcons.heart,
-                          size: 18, color: theme.colorScheme.primary),
+                      // child: Icon(LucideIcons.heart,
+                      //     size: 18, color: theme.colorScheme.primary),
                     )
                   ],
                 ),

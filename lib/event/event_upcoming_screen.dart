@@ -143,7 +143,7 @@ Future<List<Map<String, dynamic>>> _initializeData() async {
       ),
     ),
     body: fetchData.isEmpty
-        ? Center(child: Text('Mengambil Data'))
+        ? Center(child: Text('Data Kosong'))
         : ListView.builder(
             padding: MySpacing.zero,
             itemCount: fetchData.length,
@@ -153,7 +153,17 @@ Future<List<Map<String, dynamic>>> _initializeData() async {
               String date = eventData['date'] ?? "N/A";
               String imagePath = eventData['image'] ?? "assets/images/profile/avatar_2.jpg'";
               String time = eventData['time'] ?? "N/A";
+              
               String name = eventData['name'] ?? "N/A";
+
+              List<String> words = name.split(" ");
+
+              // Mengambil maksimal tiga kata dari array kata
+              List<String> slicedWords = words.length > 3 ? words.sublist(0, 3) : words;
+
+              // Menggabungkan kata-kata menjadi string baru
+              String result = slicedWords.join(" ");
+
               String subject = eventData['subject'] ?? "N/A";
               String about = eventData['about'] ?? "N/A";
               String location = eventData['location'] ?? "N/A";
@@ -164,7 +174,7 @@ Future<List<Map<String, dynamic>>> _initializeData() async {
                     image: imagePath,
                     time: time,
                     date: date,
-                    name: name,
+                    name: result,
                     subject: subject,
                     about: about,
                     locationDetail: location,

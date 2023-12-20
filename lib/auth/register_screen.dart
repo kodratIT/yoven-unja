@@ -53,9 +53,9 @@ class _RegisterScreen extends State<Register> {
     await FirebaseFirestore.instance.collection('users').add({
       'id': userDetail.id,
       'name': userDetail.name,
-      'phone_number': userDetail.mobilePhone,
+      'mobile_phone':'0'+ userDetail.mobilePhone.toString(),
     });
-
+    print(userDetail.mobilePhone.toString());
     print('User details added successfully');
   } catch (e) {
     print('Error adding user details: $e');
@@ -74,7 +74,7 @@ class _RegisterScreen extends State<Register> {
     await _createDetailUser(UserNew);
   }
 
-  bool _passwordVisible = false;
+  bool _passwordVisible = true;
   late CustomTheme customTheme;
   late ThemeData theme;
 
@@ -246,8 +246,6 @@ class _RegisterScreen extends State<Register> {
       isSigningUp = true;
     });
 
-    // String username = _usernameController.text;
-    // String number = _numberController.text;
     String email = _emailController.text;
     String password = _passwordController.text;
 

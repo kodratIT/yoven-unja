@@ -92,7 +92,11 @@ class _EventProfileScreenState extends State<EventProfileScreen> {
 
     _nameController = TextEditingController(text: DataUser?['name'].toString());
     _phoneController = TextEditingController(text: DataUser?['mobile_phone'].toString());
-    _imagesurl = DataUser!['images'].toString();
+    _imagesurl = "https://firebasestorage.googleapis.com/v0/b/yoven-b885c.appspot.com/o/images%2Fimage_20231219_143742.jpg?alt=media&token=7ece579a-5041-4e0a-989b-842e3860b39a";
+
+    if(DataUser!['images'] != ""){
+        _imagesurl = DataUser!['images'].toString();
+    }
   }
 
   Future<Map<String, dynamic>?> _getUsers(String userid) async {
@@ -208,7 +212,8 @@ class _EventProfileScreenState extends State<EventProfileScreen> {
       _LinkImages = _downloadURL!;
 
       updateUserData(_userId, _nameController.text, _phoneController.text,_LinkImages);
-     
+      
+
       print('Download URL: $_downloadURL');
     } catch (e) {
       print('Error uploading image: $e');
@@ -237,14 +242,7 @@ class _EventProfileScreenState extends State<EventProfileScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          leading: InkWell(
-            onTap: () => Navigator.of(context).pop(),
-            child: Icon(
-              LucideIcons.chevronLeft,
-              size: 20,
-              color: theme.colorScheme.onBackground,
-            ),
-          ),
+          
           elevation: 0,
         ),
         body: ListView(
@@ -260,17 +258,32 @@ class _EventProfileScreenState extends State<EventProfileScreen> {
                         width: 140,
                         height: 140,
                         clipBehavior: Clip.antiAliasWithSaveLayer,
-                       child: _imageFile == null
-                          ? Image.network(
-                              "${_imagesurl}",
-                              fit: BoxFit.fill,
-                            )
-                          : Image.file(
-                              File(
-                                _imageFile!.path,
+                        child: _imageFile == null
+                            ? Image.network(
+                                "${_imagesurl}",
+                                fit: BoxFit.fill,
+                                loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
+                                  if (loadingProgress == null) {
+                                    // Image is fully loaded
+                                    return child;
+                                  } else {
+                                    // Display a circular progress indicator while loading
+                                    return Center(
+                                      child: CircularProgressIndicator(
+                                        value: loadingProgress.expectedTotalBytes != null
+                                            ? loadingProgress.cumulativeBytesLoaded / (loadingProgress.expectedTotalBytes ?? 1)
+                                            : null,
+                                      ),
+                                    );
+                                  }
+                                },
+                              )
+                            : Image.file(
+                                File(
+                                  _imageFile!.path,
+                                ),
+                                fit: BoxFit.cover,
                               ),
-                              fit: BoxFit.cover,
-                            ),
                       ),
                       Positioned(
                         bottom: 8,
@@ -433,12 +446,23 @@ class _EventProfileScreenState extends State<EventProfileScreen> {
                     child: MyButton(
                         onPressed: (){
                            if(_emailUser == 'kodratcoc@gmail.com'){
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => EventFullAppAdmin(),
+                                ),
+                              );
                             showToast(message: "Profile Successfully updated");
                             _save();
                            }else{
-                            _save();
-                            Get.off(EventFullApp());
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => EventFullApp(),
+                                ),
+                              );
                             showToast(message: "Profile Successfully updated");
+                            _save();
                            }
                         },
                         borderRadiusAll: 4,

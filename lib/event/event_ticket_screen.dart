@@ -82,17 +82,17 @@ class _EventTicketScreenState extends State<EventTicketScreen> {
                             size: 20),
                       ),
                     ),
-                    Container(
-                      padding: MySpacing.all(8),
-                      decoration: BoxDecoration(
-                        color: customTheme.card,
-                        border: Border.all(color: customTheme.border, width: 1),
-                        borderRadius: BorderRadius.all(Radius.circular(8)),
-                      ),
-                      child: Icon(LucideIcons.share,
-                          color: theme.colorScheme.onBackground.withAlpha(220),
-                          size: 20),
-                    ),
+                    // Container(
+                    //   padding: MySpacing.all(8),
+                    //   decoration: BoxDecoration(
+                    //     color: customTheme.card,
+                    //     border: Border.all(color: customTheme.border, width: 1),
+                    //     borderRadius: BorderRadius.all(Radius.circular(8)),
+                    //   ),
+                    //   child: Icon(LucideIcons.share,
+                    //       color: theme.colorScheme.onBackground.withAlpha(220),
+                    //       size: 20),
+                    // ),
                   ],
                 ),
               ),
@@ -114,17 +114,17 @@ class _EventTicketScreenState extends State<EventTicketScreen> {
                           color: theme.colorScheme.onBackground,
                           fontWeight: 600),
                     ),
-                    Container(
-                      margin: MySpacing.left(16),
-                      padding: MySpacing.all(8),
-                      decoration: BoxDecoration(
-                          color: theme.colorScheme.primary
-                              .withAlpha(24)
-                              .withAlpha(20),
-                          borderRadius: BorderRadius.all(Radius.circular(8))),
-                      child: Icon(LucideIcons.heart,
-                          size: 18, color: theme.colorScheme.primary),
-                    )
+                    // Container(
+                    //   margin: MySpacing.left(16),
+                    //   padding: MySpacing.all(8),
+                    //   decoration: BoxDecoration(
+                    //       color: theme.colorScheme.primary
+                    //           .withAlpha(24)
+                    //           .withAlpha(20),
+                    //       borderRadius: BorderRadius.all(Radius.circular(8))),
+                    //   // child: Icon(LucideIcons.heart,
+                    //   //     size: 18, color: theme.colorScheme.primary),
+                    // )
                   ],
                 ),
               ),

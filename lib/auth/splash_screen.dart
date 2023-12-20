@@ -72,12 +72,12 @@ class _SplashScreenState extends State<SplashScreen> {
                         splashColor: customTheme.medicarePrimary.withAlpha(40),
                         padding: MySpacing.y(8),
                         onPressed: () {
-                          Navigator.of(context, rootNavigator: true).push(
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    Register()),
-                          );
-                          // Get.off(Register());
+                          // Navigator.of(context, rootNavigator: true).push(
+                          //   MaterialPageRoute(
+                          //       builder: (context) =>
+                          //           Register()),
+                          // );
+                          Get.off(Register());
                         },
                         child: MyText.labelLarge(
                           "SIGN UP",
@@ -91,10 +91,13 @@ class _SplashScreenState extends State<SplashScreen> {
                         padding: MySpacing.y(20),
                         borderRadiusAll: 4,
                         onPressed: () {
-                          Navigator.of(context, rootNavigator: true).push(
-                            MaterialPageRoute(
-                                builder: (context) => Login()),
-                          );
+                          // Navigator.of(context, rootNavigator: true).push(
+                          //   MaterialPageRoute(
+                          //       builder: (context) => Login()),
+                          // );
+
+                          Get.off(Login());
+
                         },
                         backgroundColor: customTheme.medicarePrimary,
                         child: MyText.labelLarge(
